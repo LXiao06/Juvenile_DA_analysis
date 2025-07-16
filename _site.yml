@@ -1,0 +1,27 @@
+name: "Fiber Photometry Analysis"
+output_dir: "docs"
+
+navbar:
+  title: "VNC Package Demo"
+  left:
+    - text: "Home"
+      href: index.html
+    - text: "Data Processing"
+      href: data_processing.html
+    - text: "Individual Analysis"
+      href: invidividual_analysis.html
+    - text: "Populaiton Analysis"
+      href: populaiton_analysis.html
+    - text: "GitHub"
+      href: "https://github.com/LXiao06/Juvenile_DA_analysis"
+
+exclude: ["dev", "LICENSE", "README.md"] 
+
+output:
+  html_document:
+    theme: flatly
+    highlight: tango
+    toc: true
+    toc_float: true
+    df_print: paged
+
