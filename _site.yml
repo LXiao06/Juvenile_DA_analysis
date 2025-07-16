@@ -2,14 +2,14 @@ name: "Fiber Photometry Analysis"
 output_dir: "docs"
 
 navbar:
-  title: "VNS Package Demo"
+  title: "Juvenile DA Analysis"
   left:
     - text: "Home"
       href: index.html
     - text: "Data Processing"
       href: data_processing.html
     - text: "Individual Analysis"
-      href: invidividual_analysis.html
+      href: individual_analysis.html
     - text: "Populaiton Analysis"
       href: populaiton_analysis.html
     - text: "GitHub"

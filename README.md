@@ -1,2 +1,22 @@
-# Juvenile DA Analysis
+### Overview
+------
 Code repository demonstrating VNS package implementation for analyzing longitudinal fiber photometry recordings of dopamine dynamics in vocal basal ganglia circuits during juvenile songbird development.
+
+
+### Installation
+------
+To reproduce the analyses, install the following R packages:
+```{r, install_pkgs, eval = FALSE}
+require(remotes)
+remotes::install_github("LXiao06/ASAP")
+remotes::install_github("LXiao06/VocalNeuroSync")
+```
+For details, see the [ASAP GitHub repository](https://github.com/LXiao06/ASAP) and the [VocalNeuroSync repository](https://github.com/LXiao06/VocalNeuroSync).
+
+### Tutorials
+------
+- [Data Processing](data_processing.html)
+<br />
+- [Individual Analysis](individual_analysis.html)
+<br />
+- [Population Analysis](populaiton_analysis.html)
