@@ -2,7 +2,7 @@ name: "Fiber Photometry Analysis"
 output_dir: "docs"
 
 navbar:
-  title: "VNC Package Demo"
+  title: "VNS Package Demo"
   left:
     - text: "Home"
       href: index.html
