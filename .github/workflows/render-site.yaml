@@ -34,7 +34,5 @@ jobs:
       - name: Deploy to GitHub Pages
         uses: crazy-max/ghaction-github-pages@v3
         with:
-          # The directory where your website is built
           build_dir: docs
-          # The API token is created automatically by the workflow
-          token: ${{ secrets.GITHUB_TOKEN }}
+         
