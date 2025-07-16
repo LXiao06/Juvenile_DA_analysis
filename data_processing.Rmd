@@ -11,27 +11,14 @@ date: "2025-07-15"
 ```{r setup, include = FALSE}
 knitr::opts_chunk$set(echo = TRUE, warning = FALSE, message = FALSE)
 ```
-
+\
 
 ## Overview
+**This tutorial demonstrates the data processing pipeline for analyzing longitudinal fiber photometry dopamine data recorded from vocal basal ganglia in juvenile birds. The analysis uses the VNS and ASAP packages to process both fiber photometry signals and corresponding song recordings.**
+\
+\
 
-This document demonstrates the data processing pipeline for analyzing longitudinal fiber photometry dopamine data recorded from vocal basal ganglia in juvenile birds. The analysis uses the VNS and ASAP packages to process both fiber photometry signals and corresponding song recordings.
-
-## Install Required Pacakges
-```{r, install_pkgs, eval = FALSE}
-require(remotes)
-remotes::install_github("LXiao06/ASAP")
-remotes::install_github("LXiao06/VocalNeuroSync")
-```
-
-## Load Packages
-```{r, load_pkgs, eval = FALSE}
-library("ASAP")
-library("VocalNeuroSync")
-```
-
-
-> ### Source Data 
+> ### Download Source Data 
 >
 > To begin, download the source data from the following repository.
 >
@@ -39,9 +26,22 @@ library("VocalNeuroSync")
 > - **Dataset:** The juvenile bird datasets are located within the `JuvDA` directory.
 > - **Citation:** These data are provided with the publication at [doi.org/10.1038/s41586-025-08694-9](https://doi.org/10.1038/s41586-025-08694-9).
 
+> ### Install Required Pacakges
+>  ```{r, install_pkgs, eval = FALSE}
+>  require(remotes)
+>  remotes::install_github("LXiao06/ASAP")
+>  remotes::install_github("LXiao06/VocalNeuroSync")
+>  ```
+
+
+## Load Packages
+```{r, load_pkgs, eval = FALSE}
+library("ASAP")
+library("VocalNeuroSync")
+```
+\
 
 ## Data Organization
-
 The first step involves organizing raw data files from individual animals into a structured format suitable for analysis.
 ```{r, reorg, eval = FALSE}
 organize_bird_files(
@@ -63,7 +63,7 @@ organize_bird_files(
 | `output_dir` | Destination for reorganized data |
 | `file_prefixes` | Expected file name prefixes for photometry and audio data |
 | `file_extensions` | File types to process (CSV for photometry, WAV for audio) |
-
+\
 
 ## NPM Object Creation
 
@@ -87,6 +87,7 @@ npm <- create_npm_object(
 | `sensor` | GRAB-DA2m (genetically encoded dopamine sensor) |
 | `fps` | Sampling rate at 30 frames per second |
 | `numChannel` | 2-channel recording setup |
+\
 
 ## Aduio Data Processing
 
@@ -106,7 +107,6 @@ npm <- npm |>
   find_bout(min_duration = 0.5, summary = TRUE, gap_duration = 1) |>
   plot_heatmap(segment_type = "bouts", balanced =T)
 ```
-
 **Processing Steps**
 
 The analysis is performed through a series of dedicated functions. The table below outlines each step and its purpose.
@@ -120,24 +120,21 @@ The analysis is performed through a series of dedicated functions. The table bel
 | `find_motif()`              | Identifies repeated sequences of syllables (vocal motifs). |
 | `find_bout()`               | Groups individual vocal elements into singing bouts.       |
 | `plot_heatmap()`            | Visualizes bout structure and patterns across development. |
-
-
+\
 
 ## Photometry Data Processing
 
 Process fiber photometry data using VNS (VocalNeuroSync) pipeline to detect dopamine transients/peaks.
 
-**Photometry Data Import and Quality Control**
+### Data Preprocessing
 ```{r, vns_preprocess, eval = FALSE}
 npm <- npm |>
   read_photometry() |>
   qc_photometry() |>      # This step is optional
-  process_photometry(
-    by_epoch = TRUE, 
-    epoch_window_quantile = 0.9)
+  process_photometry(by_epoch = TRUE, epoch_window_quantile = 0.9)
 ```
 
-**Synchronization and Transient Detection**
+### Synchronization
 ```{r, vns_process, eval = FALSE}
 npm <- npm |>
  sync_epoch(scale = TRUE) |>
@@ -159,16 +156,15 @@ npm <- npm |>
 | `sync_epoch()`              | Synchronize the detected **transients** for temporal shift analysis. |
 | `filter_peaks()`            | Measure the peak amplitude of dopamine signals within epochs.   |
 | `sync_epoch()`              | Synchronize the measured **peak amplitudes** for amplitude shift analysis. |
-
+\
 
 ## Data Export
 
 Save the processed npm object for subsequent analysis.
 ```{r, save_npm, eval = FALSE}
-# Save individual npm object
-saveRDS(npm, "./data/B633.rds")
+saveRDS(npm, "./data/npm_B633.rds")
 ```
-
+\
 
 ## Summary
 
@@ -180,6 +176,8 @@ This processing pipeline successfully:
 4. **Analyzed** photometry data to detect dopamine transients and peak values
 5. **Synchronized** neural signals with vocal behavior
 6. **Saved** the processed data for downstream analysis
+\
+\
 
 ## SessionInfo
 
