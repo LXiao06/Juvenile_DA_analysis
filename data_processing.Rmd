@@ -1,0 +1,188 @@
+---
+title: "Data Processing"
+output: 
+  html_document:
+    toc: true
+    toc_float: true
+    theme: flatly
+date: "2025-07-15"
+---
+
+```{r setup, include = FALSE}
+knitr::opts_chunk$set(echo = TRUE, warning = FALSE, message = FALSE)
+```
+
+
+## Overview
+
+This document demonstrates the data processing pipeline for analyzing longitudinal fiber photometry dopamine data recorded from vocal basal ganglia in juvenile birds. The analysis uses the VNS and ASAP packages to process both fiber photometry signals and corresponding song recordings.
+
+## Install Required Pacakges
+```{r, install_pkgs, eval = FALSE}
+require(remotes)
+remotes::install_github("LXiao06/ASAP")
+remotes::install_github("LXiao06/VocalNeuroSync")
+```
+
+## Load Packages
+```{r, load_pkgs, eval = FALSE}
+library("ASAP")
+library("VocalNeuroSync")
+```
+
+
+> ### Source Data 
+>
+> To begin, download the source data from the following repository.
+>
+> - **Repository:** [Duke University Library Research Data Repository](https://doi.org/10.7924/r4s186852)
+> - **Dataset:** The juvenile bird datasets are located within the `JuvDA` directory.
+> - **Citation:** These data are provided with the publication at [doi.org/10.1038/s41586-025-08694-9](https://doi.org/10.1038/s41586-025-08694-9).
+
+
+## Data Organization
+
+The first step involves organizing raw data files from individual animals into a structured format suitable for analysis.
+```{r, reorg, eval = FALSE}
+organize_bird_files(
+  root_dir = "dir/path/to/raw/data/of/individual/animals",
+  bird_id = "B633",
+  dob = "2/5/2022",
+  output_dir = "dir/path/to/reorganized/data",
+  file_prefixes = c("combo_test", "test_audio"),
+  file_extensions = c("csv", "wav"),
+  verbose = TRUE
+)
+```
+
+| Parameter | Description |
+|:---|:---|
+| `root_dir` | Path to raw data directory |
+| `bird_id` | Unique identifier for the individual bird (B633) |
+| `dob` | Date of birth (2/5/2022) |
+| `output_dir` | Destination for reorganized data |
+| `file_prefixes` | Expected file name prefixes for photometry and audio data |
+| `file_extensions` | File types to process (CSV for photometry, WAV for audio) |
+
+
+## NPM Object Creation
+
+Create the main analysis object that will contain both photometry and audio data with associated metadata.
+```{r, npm, eval = FALSE}
+# Create npm object
+npm <- create_npm_object(
+  base_path = "dir/path/to/reorganized/data",
+  subfolders_to_include = NULL,
+  labels = paste0(c(72:83, 85:91), "dph"),  # Days post-hatch
+  imageArea = "Area X",
+  sensor = "GRAB-DA2m",
+  fps = 30,
+  numChannel = 2
+)
+```
+| Parameter | Description |
+|:---|:---|
+| `labels` | Time points from 72-83 and 85-91 days post-hatch (dph) |
+| `imageArea` | Recording location (Area X - the vocal Basal ganglia) |
+| `sensor` | GRAB-DA2m (genetically encoded dopamine sensor) |
+| `fps` | Sampling rate at 30 frames per second |
+| `numChannel` | 2-channel recording setup |
+
+## Aduio Data Processing
+
+Process song recordings using ASAP (Automated Song Analysis Pipeline) to identify epochs, e.g. song bouts and motifs.
+```{r, asap, eval = FALSE}
+npm <- npm |>
+  compute_wav_durations() |>
+  create_audio_clip(indices = 50, start_time =70,
+                    end_time = 73, clip_names = "m1") |>
+  create_template(template_name = "bc", clip_name = "m1",
+                  start_time = 0.63, end_time =  0.82,
+                  freq_min = 0.5, freq_max = 8, write_template = T) |>
+  detect_template(template_name = "bc", day = NULL,
+                  indices = NULL, proximity_window = 1,
+                  threshold = NULL, save_plot = F) |>
+  find_motif(template_name = "bc", pre_time = 0.4, lag_time = 0.5)|>
+  find_bout(min_duration = 0.5, summary = TRUE, gap_duration = 1) |>
+  plot_heatmap(segment_type = "bouts", balanced =T)
+```
+
+**Processing Steps**
+
+The analysis is performed through a series of dedicated functions. The table below outlines each step and its purpose.
+
+| Function                    | Description                                                |
+| :-------------------------- | :--------------------------------------------------------- |
+| `compute_wav_durations()`   | Calculates the total duration of all audio files.          |
+| `create_audio_clip()`       | Extracts specific time segments for manual template selection. |
+| `create_template()`         | Defines a spectral template for song syllable detection.   |
+| `detect_template()`         | Finds all occurrences of the template across recordings.   |
+| `find_motif()`              | Identifies repeated sequences of syllables (vocal motifs). |
+| `find_bout()`               | Groups individual vocal elements into singing bouts.       |
+| `plot_heatmap()`            | Visualizes bout structure and patterns across development. |
+
+
+
+## Photometry Data Processing
+
+Process fiber photometry data using VNS (VocalNeuroSync) pipeline to detect dopamine transients/peaks.
+
+**Photometry Data Import and Quality Control**
+```{r, vns_preprocess, eval = FALSE}
+npm <- npm |>
+  read_photometry() |>
+  qc_photometry() |>      # This step is optional
+  process_photometry(
+    by_epoch = TRUE, 
+    epoch_window_quantile = 0.9)
+```
+
+**Synchronization and Transient Detection**
+```{r, vns_process, eval = FALSE}
+npm <- npm |>
+ sync_epoch(scale = TRUE) |>
+  find_transients(method = "epoch", lag = 100, threshold = 2, influence = 0.15) |>
+  sync_epoch(data_type = "transient", scale = FALSE) |>
+  filter_peaks() |>
+  sync_epoch(by_peak_value = TRUE)
+```
+
+**Processing Steps**
+
+| Function                    | Description                                                     |
+| :-------------------------- | :---------------------------------------------------------      |
+| `read_photometry()`         | Import raw photometry data.                                     |
+| `qc_photometry()`           | Perform optional quality control checks.                        |
+| `process_photometry()`.     | Apply baseline correction and process the signal.               |
+| `sync_epoch()`              | Synchronize the **continuous photometry signal** across epochs. |
+| `find_transients()`         | Detect dopamine transients using a peak detection algorithm.    |
+| `sync_epoch()`              | Synchronize the detected **transients** for temporal shift analysis. |
+| `filter_peaks()`            | Measure the peak amplitude of dopamine signals within epochs.   |
+| `sync_epoch()`              | Synchronize the measured **peak amplitudes** for amplitude shift analysis. |
+
+
+## Data Export
+
+Save the processed npm object for subsequent analysis.
+```{r, save_npm, eval = FALSE}
+# Save individual npm object
+saveRDS(npm, "./data/B633.rds")
+```
+
+
+## Summary
+
+This processing pipeline successfully:
+
+1. **Organized**  raw data files into a structured format
+2. **Created** an npm object containing both photometry and audio data
+3. **Processed** song recordings to identify vocal motifs and bouts
+4. **Analyzed** photometry data to detect dopamine transients and peak values
+5. **Synchronized** neural signals with vocal behavior
+6. **Saved** the processed data for downstream analysis
+
+## SessionInfo
+
+```{r}
+sessionInfo()
+```
