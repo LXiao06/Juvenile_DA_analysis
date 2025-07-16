@@ -16,7 +16,7 @@ For details, see the [ASAP GitHub repository](https://github.com/LXiao06/ASAP) a
 ### Tutorials
 ------
 - [Data Processing](data_processing.html)
-<br />
+  <br />
 - [Individual Analysis](individual_analysis.html)
-<br />
+  <br />
 - [Population Analysis](populaiton_analysis.html)

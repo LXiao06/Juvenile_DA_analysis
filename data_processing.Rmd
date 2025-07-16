@@ -25,7 +25,7 @@ knitr::opts_chunk$set(echo = TRUE, warning = FALSE, message = FALSE)
 > - **Repository:** [Duke University Library Research Data Repository](https://doi.org/10.7924/r4s186852)
 > - **Dataset:** The juvenile bird datasets are located within the `JuvDA` directory.
 > - **Citation:** These data are provided with the publication at [doi.org/10.1038/s41586-025-08694-9](https://doi.org/10.1038/s41586-025-08694-9).
-
+>
 > ### Install Required Pacakges
 >  ```{r, install_pkgs, eval = FALSE}
 >  require(remotes)
@@ -181,6 +181,6 @@ This processing pipeline successfully:
 
 ## SessionInfo
 
-```{r}
+```{r, echo = FALSE}
 sessionInfo()
 ```
