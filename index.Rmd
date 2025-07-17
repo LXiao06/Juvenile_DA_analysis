@@ -48,6 +48,6 @@ You may need to download the raw or processed data before running individual tut
 >
 >  **Processed data** used for [Individual Analysis](invidividual_analysis.html) and [Population Analysis](populaiton_analysis.html) is available at:
 >
->  - [Processed Data Repository](link-to-processed-data-repo)
+>  - [UT Southwestern Research Data Repository](link-to-processed-data-repo)
 >  - Or generated from the raw data using the [Data Processing](data_processing.html) pipeline
 >  - Publication: [doi.org/xxxx/xxx](link-to-manuscript)
