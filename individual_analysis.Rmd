@@ -102,7 +102,6 @@ transient_shift <-  analyze_timing_shift(segment_counts,
                                          xlab = "Centroid Position of DA Transients(ms)")
 ```
 ![Figure C](figs/FigC.png)
-
 \
 
 ## Amplitude Shift of Dopamine
@@ -130,7 +129,6 @@ amplitude_shift <- analyze_amplitude_shift(segment_tab,
                                    label_pair = c(1,4) )        # First and last 200ms
 ```
 ![Figure L-M](figs/FigL-M.png)
-
 \
 
 ### Supplemental figure 1A-D
@@ -153,7 +151,6 @@ amplitude_redistribution <- analyze_amplitude_redistribution(segment_tab,
                                                          step_size = 2)
 ```
 ![Figure sup1](figs/Fig_sup1.png)
-
 \
 
 ## Information Theory Analysis
@@ -176,7 +173,6 @@ dev_res <- analyze_directional_cH(segment_counts,
                                   target_seg = 4)
 ```
 ![Figure Q-R](figs/FigQ-R.png)
-
 \
 
 ### Supplemental figure 2A-D
@@ -195,7 +191,6 @@ Representative example showing shift of directional information flow across diff
 dev_res  <- analyze_directional_info_flow(segment_counts, step_size = 2)
 ```
 ![Figure sup2](figs/Fig_sup2.png)
-
 \
 
 ## Summary

@@ -32,7 +32,7 @@ Tutorials
 <div style="font-size: 18px;">
 
 - [Data Processing](data_processing.html)
-- [Individual Analysis](invidividual_analysis.html)
+- [Individual Analysis](individual_analysis.html)
 - [Population Analysis](populaiton_analysis.html)
 \
 \
