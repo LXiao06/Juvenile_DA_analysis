@@ -10,6 +10,9 @@ date: "2025-07-15"
 
 ```{r setup, include = FALSE}
 knitr::opts_chunk$set(echo = TRUE, warning = FALSE, message = FALSE)
+
+# Global variable to control code evaluation and figure generation
+EVAL <- FALSE  # Set to TRUE to switch to eval = TRUE, FALSE to use pre-generated images
 ```
 
 \
@@ -21,7 +24,7 @@ knitr::opts_chunk$set(echo = TRUE, warning = FALSE, message = FALSE)
 
 > ### Install Required Packages
 >
-> ```{r, install_pkgs, eval = FALSE}
+> ```{r, install_pkgs, eval = EVAL}
 > require(remotes)
 > remotes::install_github("LXiao06/ASAP")
 > remotes::install_local(file.path(getwd(),"pkgs", "VNS_0.0.0.9000.tar.gz"), 
@@ -30,7 +33,7 @@ knitr::opts_chunk$set(echo = TRUE, warning = FALSE, message = FALSE)
 
 ## Load Packages
 
-```{r, load_pkgs, eval = FALSE}
+```{r, load_pkgs, eval = EVAL}
 library("ASAP")
 library("VNS")
 ```
@@ -41,7 +44,7 @@ library("VNS")
 
 Load the npm object created from the data processing pipeline.
 
-```{r, load_data, eval = FALSE}
+```{r, load_data, eval = EVAL}
 npm <- readRDS("./data/npm_B633.rds")
 ```
 
@@ -71,7 +74,7 @@ plot_heatmap(npm, segment_type = "bouts",
 
 Raster plot showing dopamine transients in individual epochs of the example bird. Red and blue vertical lines indicate motif onset and offset, respectively. Horizontal dashed lines delineate boundaries between days.
 
-```{r, FigB, fig.width=6, fig.height=5, eval = FALSE}
+```{r, FigB, fig.width=6, fig.height=5, eval = EVAL}
 plot_transient_raster(npm,
                       method = "epoch", window = c(-1, 0.6),
                       region = "reg0",
@@ -82,14 +85,19 @@ plot_transient_raster(npm,
                       ylab = "Day post hatch",
                       relative_time_axis = F)
 ```
-![Figure B](figs/FigB.png)
+<!-- ![Figure B](figs/FigB.png) -->
+
+```{r, img1, echo=FALSE, eval=!EVAL}
+knitr::include_graphics("figs/FigB.png")
+```
+
 \
 
 ### Figure C
 
 Density ridge plots showing the distribution of centroid positions of dopamine transients for each dph of the example bird. Red bars indicate distribution peaks. Labels t₁-t₄ denote 200-ms segments spanning the motif window.
 
-```{r, FigC, fig.width=6, fig.height=5, eval = FALSE}
+```{r, FigC, fig.width=6, fig.height=5, eval = EVAL}
 segment_counts <- create_segment_table(npm,
                                        region ="reg0",
                                        window = c(-0.4, 0.4),
@@ -101,7 +109,12 @@ transient_shift <-  analyze_timing_shift(segment_counts,
                                          highlight_position ="mode",
                                          xlab = "Centroid Position of DA Transients(ms)")
 ```
-![Figure C](figs/FigC.png)
+<!-- ![Figure C](figs/FigC.png) -->
+
+```{r, img2, echo=FALSE, eval=!EVAL}
+knitr::include_graphics("figs/FigC.png")
+```
+
 \
 
 ## Amplitude Shift of Dopamine
@@ -114,7 +127,7 @@ Representative example showing classic TD learning amplitude shift pattern betwe
 
 (right) Early/late amplitude ratio increased significantly across development.
 
-```{r, FigL-M, fig.width=8, fig.height=4, eval = FALSE}
+```{r, FigL-M, fig.width=8, fig.height=4, eval = EVAL}
 segment_tab <- create_segment_table(npm,
                                     region = "reg0",
                                     method = "epoch",
@@ -128,7 +141,12 @@ amplitude_shift <- analyze_amplitude_shift(segment_tab,
                                    segments_per_label = 3,      # Number of segments at each edge
                                    label_pair = c(1,4) )        # First and last 200ms
 ```
-![Figure L-M](figs/FigL-M.png)
+<!-- ![Figure L-M](figs/FigL-M.png) -->
+
+```{r, img3, echo=FALSE, eval=!EVAL}
+knitr::include_graphics("figs/FigL-M.png")
+```
+
 \
 
 ### Supplemental figure 1A-D
@@ -143,14 +161,19 @@ Representative example showing amplitude redistribution across different pairs o
 
 (d) Early/late amplitude ratio (t₂/t₄) increased significantly across development.
 
-```{r, Fig_sup1, fig.width=6, fig.height=6, eval = FALSE}
+```{r, Fig_sup1, fig.width=6, fig.height=6, eval = EVAL}
 amplitude_redistribution <- analyze_amplitude_redistribution(segment_tab,
                                                          output = "list",
                                                          segment_duration_ms = 67,
                                                          segments_per_label = 3,
                                                          step_size = 2)
 ```
-![Figure sup1](figs/Fig_sup1.png)
+<!-- ![Figure sup1](figs/Fig_sup1.png) -->
+
+```{r, img4, echo=FALSE, eval=!EVAL}
+knitr::include_graphics("figs/Fig_sup1.png")
+```
+
 \
 
 ## Information Theory Analysis
@@ -163,7 +186,7 @@ Representative example showing predictive coding development between early and l
 
 (right) Prediction asymmetry (H(t₁\|t₄) - H(t₄\|t₁)) significantly increased across development.
 
-```{r, FigQ-R, fig.width=8, fig.height=4, eval = FALSE}
+```{r, FigQ-R, fig.width=8, fig.height=4, eval = EVAL}
 segment_counts <- create_segment_table(npm,
                                        region ="reg0",
                                        window = c(-0.4, 0.4),
@@ -172,7 +195,12 @@ dev_res <- analyze_directional_cH(segment_counts,
                                   source_seg = 1,
                                   target_seg = 4)
 ```
-![Figure Q-R](figs/FigQ-R.png)
+<!-- ![Figure Q-R](figs/FigQ-R.png) -->
+
+```{r, img5, echo=FALSE, eval=!EVAL}
+knitr::include_graphics("figs/FigQ-R.png")
+```
+
 \
 
 ### Supplemental figure 2A-D
@@ -187,10 +215,15 @@ Representative example showing shift of directional information flow across diff
 
 (d) Prediction asymmetry (H(t₂\|t₄) - H(t₄\|t₂)) increased significantly across development, with dominance crossover at DPH 78.7.
 
-```{r, Fig_sup2, fig.width=6, fig.height=6, eval = FALSE}
+```{r, Fig_sup2, fig.width=6, fig.height=6, eval = EVAL}
 dev_res  <- analyze_directional_info_flow(segment_counts, step_size = 2)
 ```
-![Figure sup2](figs/Fig_sup2.png)
+<!-- ![Figure sup2](figs/Fig_sup2.png) -->
+
+```{r, img6, echo=FALSE, eval=!EVAL}
+knitr::include_graphics("figs/Fig_sup2.png")
+```
+
 \
 
 ## Summary
