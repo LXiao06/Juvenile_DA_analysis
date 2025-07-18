@@ -15,7 +15,7 @@ navbar:
     - text: "GitHub"
       href: "https://github.com/LXiao06/Juvenile_DA_analysis"
 
-exclude: ["dev", "LICENSE", "README.md"] 
+exclude: ["dev", "data", "pkgs", "LICENSE", "README.md"] 
 
 output:
   html_document:

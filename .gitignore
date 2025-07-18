@@ -51,3 +51,6 @@ rsconnect/
 
 # System Temporary files
 .DS_Store
+
+pkgs/
+data/
