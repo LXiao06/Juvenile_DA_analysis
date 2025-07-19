@@ -179,7 +179,7 @@ This processing pipeline successfully:
 \
 \
 
-## SessionInfo
+## Session Info
 
 ```{r, echo = FALSE}
 sessionInfo()
