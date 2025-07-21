@@ -12,7 +12,7 @@ date: "2025-07-20"
 knitr::opts_chunk$set(echo = TRUE, warning = FALSE, message = FALSE)
 
 # Global variable to control code evaluation and figure generation
-EVAL <- TRUE  # Set to TRUE to switch to eval = TRUE, FALSE to use pre-generated images
+EVAL <- FALSE  # Set to TRUE to switch to eval = TRUE, FALSE to use pre-generated images
 ```
 
 \
