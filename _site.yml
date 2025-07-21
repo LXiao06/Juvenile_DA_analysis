@@ -10,7 +10,7 @@ navbar:
       href: data_processing.html
     - text: "Individual Analysis"
       href: individual_analysis.html
-    - text: "Populaiton Analysis"
+    - text: "Population Analysis"
       href: population_analysis.html
     - text: "GitHub"
       href: "https://github.com/LXiao06/Juvenile_DA_analysis"
