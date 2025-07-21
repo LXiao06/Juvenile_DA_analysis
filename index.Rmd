@@ -37,8 +37,8 @@ Tutorials
 \
 \
 
-Data Availability
-------
+### Data Availability
+
 You may need to download the raw or processed data before running individual tutorials. See individual sections for details on required datasets.
 
 >  **Raw data** used for [Data Processing](data_processing.html) is available at:

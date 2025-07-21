@@ -12,7 +12,7 @@ date: "2025-07-20"
 knitr::opts_chunk$set(echo = TRUE, warning = FALSE, message = FALSE)
 
 # Global variable to control code evaluation and figure generation
-EVAL <- FALSE  # Set to TRUE to switch to eval = TRUE, FALSE to use pre-generated images
+EVAL <- TRUE  # Set to TRUE to switch to eval = TRUE, FALSE to use pre-generated images
 ```
 
 \
@@ -24,7 +24,7 @@ EVAL <- FALSE  # Set to TRUE to switch to eval = TRUE, FALSE to use pre-generate
 
 > ### Install Required Packages
 >
-> ```{r, install_pkgs, eval = EVAL}
+> ```{r, install_pkgs, eval = FALSE}
 > remotes::install_local(file.path(getwd(),"pkgs", "VNS_0.0.0.9000.tar.gz"),
 >                       dependencies = TRUE)
 > ```
@@ -44,20 +44,6 @@ Load the population data created from the data processing and individual analysi
 ```{r, load_data, eval = EVAL}
 load("./data/population_data.rda")
 ```
-
-The `population_data.rda` file contains the following pre-processed datasets:
-
-**`temporal_shift_res`** - Population-level temporal dynamics dataset containing dopamine transient timing metrics across development for all animals. Used for analyzing temporal difference learning patterns including peak timing, backward shift rates, temporal entropy, and Gini coefficients.
-
-**`amplitude_shift_res`** - Population-level amplitude analysis dataset containing peak amplitude measurements from early and late motif segments across development. Used for examining amplitude redistribution patterns characteristic of temporal difference learning.
-
-**`amplitude_within_window_res`** - Population-level amplitude redistribution dataset for within-window sliding analysis. Contains amplitude measurements across different segment pairs within 6-day temporal windows for examining short-term developmental changes.
-
-**`cH_res`** - Population-level conditional entropy dataset containing directional information flow measurements between early and late motif segments. Used for analyzing predictive coding development and information asymmetry across animals.
-
-**`cH_within_window_res`** - Population-level information flow dataset for within-window sliding analysis. Contains conditional entropy measurements within 6-day temporal windows for examining short-term changes in predictive relationships.
-
-These datasets represent the combined results from individual animal analyses (as demonstrated in the individual analysis tutorial) and are ready for population-level statistical modeling and visualization.
 
 \
 
@@ -98,8 +84,7 @@ Apply the same analysis pipeline to each animal in the dataset. This ensures con
 ### STEP 4: Combine Individual Results into Population Data
 
 Pool all individual animal results into a single data frame. 
-
-**`combine_animal_results`** function:
+'combine_animal_results' function:
 - Merges individual data frames
 - Adds animal identifiers for tracking
 - Preserves all computed metrics for population-level analysis
