@@ -8,8 +8,16 @@ Code repository demonstrating VNS package implementation for analyzing longitudi
 To reproduce the analyses, install the following R packages:
 ```{r, install_pkgs, eval = FALSE}
 require(remotes)
+
+# Install ASAP
 remotes::install_github("LXiao06/ASAP")
+# Or install local version
+remotes::install_local("pkgs/ASAP_0.3.3.tar.gz", dependencies = TRUE)
+
+# Install VNS
 remotes::install_github("LXiao06/VocalNeuroSync")
+# Or install local version
+remotes::install_local("pkgs/VNS_0.0.0.9000.tar.gz", dependencies = TRUE)
 ```
 For details, see the [ASAP GitHub repository](https://github.com/LXiao06/ASAP) and the [VocalNeuroSync repository](https://github.com/LXiao06/VocalNeuroSync).
 
