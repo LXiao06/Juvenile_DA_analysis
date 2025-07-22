@@ -12,6 +12,8 @@ navbar:
       href: individual_analysis.html
     - text: "Population Analysis"
       href: population_analysis.html
+    - text: "Reference"
+      href: reference.html
     - text: "GitHub"
       href: "https://github.com/LXiao06/Juvenile_DA_analysis"
 

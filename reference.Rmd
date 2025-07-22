@@ -1,0 +1,317 @@
+---
+title: "Function Reference"
+output: 
+  html_document:
+    toc: true
+    toc_float: true
+    theme: flatly
+---
+
+```{r setup, include = FALSE}
+knitr::opts_chunk$set(echo = TRUE, warning = FALSE, message = FALSE)
+```
+
+\
+
+**This page provides comprehensive documentation for all functions used in the data processing, individual analysis, and population analysis tutorials. Functions are organized by workflow stage or package.**\
+\
+
+## Function Usage Summary
+
+| **Workflow Stage** | **Primary Functions** | **Purpose** |
+|:---|:---|:---|
+| **Data Organization** | `organize_bird_files()`, `create_npm_object()` | Structure raw data and initialize analysis object |
+| **Audio Processing** | [`compute_wav_durations()`](https://lxiao06.github.io/ASAP/reference/compute_wav_durations.html), [`create_audio_clip()`](https://lxiao06.github.io/ASAP/reference/create_audio_clip.html), [`create_template()`](https://lxiao06.github.io/ASAP/reference/create_template.html), [`detect_template()`](https://lxiao06.github.io/ASAP/reference/detect_template.html), [`find_motif()`](https://lxiao06.github.io/ASAP/reference/find_motif.html), [`find_bout()`](https://lxiao06.github.io/ASAP/reference/find_bout.html) | Process song recordings and identify vocal elements |
+| **Photometry Processing** | `read_photometry()`, `process_photometry()`, `sync_epoch()`, `find_transients()`, `filter_peaks()` | Process fiber photometry signals and detect neural events |
+| **Individual Analysis** | `create_segment_table()`, `analyze_timing_shift()`, `analyze_amplitude_shift()`, `analyze_directional_cH()` | Analyze individual animal patterns |
+| **Population Analysis** | `combine_animal_results()`, `analyze_td_metrics()`, `analyze_amplitude_metrics()`, `analyze_cH_metrics()` | Combine and analyze population-level patterns |
+| **Visualization** | [`plot_heatmap()`](https://lxiao06.github.io/ASAP/reference/plot_heatmap.html), `plot_transient_raster()`, `plot_td_panel()`, `plot_amplitude_panel()`, `plot_cH_panel()` | Create figures and visualizations |
+
+\
+
+## ASAP Package Functions
+
+The ASAP (Automated Song Analysis Pipeline) package provides functions for processing audio recordings and analyzing vocal behavior.
+
+### Audio Processing
+
+**`compute_wav_durations()`** - Calculates the total duration of all audio files.
+
+- **Purpose**: Computes audio file durations for processing pipeline
+- **Used in**: [Data Processing](data_processing.html)
+- **Documentation**: [ASAP Reference](https://lxiao06.github.io/ASAP/reference/compute_wav_durations.html)
+
+**`create_audio_clip()`** - Extracts specific time segments for manual template selection.
+
+- **Purpose**: Creates audio clips for template creation
+- **Key Parameters**: `indices`, `start_time`, `end_time`, `clip_names`
+- **Used in**: [Data Processing](data_processing.html)
+- **Documentation**: [ASAP Reference](https://lxiao06.github.io/ASAP/reference/create_audio_clip.html)
+
+**`create_template()`** - Defines a spectral template for song syllable detection.
+
+- **Purpose**: Creates spectral templates for automated syllable detection
+- **Key Parameters**: `template_name`, `clip_name`, `start_time`, `end_time`, `freq_min`, `freq_max`
+- **Used in**: [Data Processing](data_processing.html)
+- **Documentation**: [ASAP Reference](https://lxiao06.github.io/ASAP/reference/create_template.html)
+
+**`detect_template()`** - Finds all occurrences of the template across recordings.
+
+- **Purpose**: Detects syllable occurrences using spectral templates
+- **Key Parameters**: `template_name`, `day`, `indices`, `proximity_window`, `threshold`
+- **Used in**: [Data Processing](data_processing.html)
+- **Documentation**: [ASAP Reference](https://lxiao06.github.io/ASAP/reference/detect_template.html)
+
+**`find_motif()`** - Identifies repeated sequences of syllables (vocal motifs).
+
+- **Purpose**: Groups syllables into motif sequences
+- **Key Parameters**: `template_name`, `pre_time`, `lag_time`
+- **Used in**: [Data Processing](data_processing.html)
+- **Documentation**: [ASAP Reference](https://lxiao06.github.io/ASAP/reference/find_motif.html)
+
+**`find_bout()`** - Groups individual vocal elements into singing bouts.
+
+- **Purpose**: Identifies continuous singing episodes
+- **Key Parameters**: `min_duration`, `summary`, `gap_duration`
+- **Used in**: [Data Processing](data_processing.html)
+- **Documentation**: [ASAP Reference](https://lxiao06.github.io/ASAP/reference/find_bout.html)
+
+### Visualization
+
+**`plot_heatmap()`** - Visualizes motif or bout structure and patterns across development.
+
+- **Purpose**: Creates heatmap visualizations of vocal development
+- **Key Parameters**: `segment_type`, `balanced`, `window`, `contrast`, `reference_lines`
+- **Used in**: [Data Processing](data_processing.html), [Individual Analysis](individual_analysis.html)
+- **Documentation**: [ASAP Reference](https://lxiao06.github.io/ASAP/reference/plot_heatmap.html)
+
+\
+
+## VNS Package Functions
+
+The VNS (VocalNeuroSync) package provides functions for processing fiber photometry data and analyzing neural-vocal synchronization.
+
+### Data Organization
+
+**`organize_bird_files()`** - Organizes raw data files from individual animals into a structured format suitable for analysis.
+
+- **Purpose**: Restructures raw data directories for consistent processing
+- **Key Parameters**: `root_dir`, `bird_id`, `dob`, `output_dir`, `file_prefixes`, `file_extensions`
+- **Used in**: [Data Processing](data_processing.html)
+- **Documentation**: Available in VNS man pages
+
+### NPM Object Creation
+
+**`create_npm_object()`** - Creates the main analysis object containing both photometry and audio data with metadata.
+
+- **Purpose**: Initializes the core data structure for all subsequent analyses
+- **Key Parameters**: `base_path`, `labels`, `imageArea`, `sensor`, `fps`, `numChannel`
+- **Used in**: [Data Processing](data_processing.html)
+- **Documentation**: Available in VNS man pages
+
+### Data Import and Preprocessing
+
+**`read_photometry()`** - Imports raw photometry data.
+
+- **Purpose**: Reads photometry data files into the npm object
+- **Used in**: [Data Processing](data_processing.html)
+- **Documentation**: Available in VNS man pages
+
+**`qc_photometry()`** - Performs optional quality control checks.
+
+- **Purpose**: Quality control assessment of photometry signals
+- **Used in**: [Data Processing](data_processing.html)
+- **Documentation**: Available in VNS man pages
+
+**`process_photometry()`** - Applies baseline correction and processes the signal.
+
+- **Purpose**: Baseline correction and signal preprocessing
+- **Key Parameters**: `by_epoch`, `epoch_window_quantile`
+- **Used in**: [Data Processing](data_processing.html)
+- **Documentation**: Available in VNS man pages
+
+### Signal Synchronization
+
+**`sync_epoch()`** - Synchronizes photometry signals across epochs.
+
+- **Purpose**: Aligns signals for temporal analysis
+- **Key Parameters**: `scale`, `data_type`, `by_peak_value`
+- **Used in**: [Data Processing](data_processing.html)
+- **Documentation**: Available in VNS man pages
+
+**`find_transients()`** - Detects dopamine transients using peak detection algorithms.
+
+- **Purpose**: Identifies dopamine transient events
+- **Key Parameters**: `method`, `lag`, `threshold`, `influence`
+- **Used in**: [Data Processing](data_processing.html)
+- **Documentation**: Available in VNS man pages
+
+**`filter_peaks()`** - Measures peak amplitude of dopamine signals within epochs.
+
+- **Purpose**: Quantifies peak amplitudes for amplitude analysis
+- **Used in**: [Data Processing](data_processing.html)
+- **Documentation**: Available in VNS man pages
+
+### Segmentation and Analysis
+
+**`create_segment_table()`** - Creates segmented data tables for temporal analysis.
+
+- **Purpose**: Segments data into time windows for analysis
+- **Key Parameters**: `region`, `window`, `n_segments`, `min_epoch`, `method`, `data_type`
+- **Used in**: [Individual Analysis](individual_analysis.html), [Population Analysis](population_analysis.html)
+- **Documentation**: Available in VNS man pages
+
+### Individual Analysis Functions
+
+**`analyze_timing_shift()`** - Analyzes temporal shifts in dopamine transients.
+
+- **Purpose**: Quantifies timing changes across development
+- **Key Parameters**: `method`, `segment_duration_ms`, `bandwidth`, `highlight_position`
+- **Used in**: [Individual Analysis](individual_analysis.html)
+- **Documentation**: Available in VNS man pages
+
+**`analyze_amplitude_shift()`** - Analyzes amplitude shifts between early and late segments.
+
+- **Purpose**: Quantifies amplitude redistribution patterns
+- **Key Parameters**: `output`, `segment_duration_ms`, `segments_per_label`, `label_pair`
+- **Used in**: [Individual Analysis](individual_analysis.html)
+- **Documentation**: Available in VNS man pages
+
+**`analyze_amplitude_redistribution()`** - Analyzes amplitude redistribution across segment pairs.
+
+- **Purpose**: Examines amplitude changes across multiple segment combinations
+- **Key Parameters**: `output`, `segment_duration_ms`, `segments_per_label`, `step_size`
+- **Used in**: [Individual Analysis](individual_analysis.html)
+- **Documentation**: Available in VNS man pages
+
+**`analyze_directional_cH()`** - Analyzes directional conditional entropy between segments.
+
+- **Purpose**: Quantifies information flow and predictive relationships
+- **Key Parameters**: `source_seg`, `target_seg`, `output`
+- **Used in**: [Individual Analysis](individual_analysis.html), [Population Analysis](population_analysis.html)
+- **Documentation**: Available in VNS man pages
+
+**`analyze_directional_info_flow()`** - Analyzes directional information flow across development.
+
+- **Purpose**: Examines information flow changes over time
+- **Key Parameters**: `step_size`
+- **Used in**: [Individual Analysis](individual_analysis.html)
+- **Documentation**: Available in VNS man pages
+
+### Population Analysis Functions
+
+**`combine_animal_results()`** - Combines individual animal results into population datasets.
+
+- **Purpose**: Merges individual analysis results for population-level analysis
+- **Used in**: [Population Analysis](population_analysis.html)
+- **Documentation**: Available in VNS man pages
+
+**`analyze_td_metrics()`** - Performs linear mixed-effects modeling on temporal difference metrics.
+
+- **Purpose**: Population-level statistical analysis of temporal dynamics
+- **Used in**: [Population Analysis](population_analysis.html)
+- **Documentation**: Available in VNS man pages
+
+**`analyze_amplitude_metrics()`** - Performs linear mixed-effects modeling on amplitude metrics.
+
+- **Purpose**: Population-level statistical analysis of amplitude patterns
+- **Used in**: [Population Analysis](population_analysis.html)
+- **Documentation**: Available in VNS man pages
+
+**`analyze_cH_metrics()`** - Performs linear mixed-effects modeling on conditional entropy metrics.
+
+- **Purpose**: Population-level statistical analysis of information flow
+- **Used in**: [Population Analysis](population_analysis.html)
+- **Documentation**: Available in VNS man pages
+
+**`analyze_within_window_trends()`** - Analyzes trends within sliding temporal windows.
+
+- **Purpose**: Examines short-term developmental changes
+- **Key Parameters**: `test_method`, `window_size`, `plot_results`
+- **Used in**: [Population Analysis](population_analysis.html)
+- **Documentation**: Available in VNS man pages
+
+**`analyze_within_window_trends2()`** - Alternative within-window analysis with mixed-effects models.
+
+- **Purpose**: Advanced within-window analysis with mixed-effects modeling
+- **Key Parameters**: `model`, `test_method`, `window_size`, `plot_results`
+- **Used in**: [Population Analysis](population_analysis.html)
+- **Documentation**: Available in VNS man pages
+
+**`analyze_within_window_info_flow()`** - Analyzes information flow within sliding windows.
+
+- **Purpose**: Examines short-term information flow changes
+- **Key Parameters**: `model`, `window_size`, `plot_results`
+- **Used in**: [Population Analysis](population_analysis.html)
+- **Documentation**: Available in VNS man pages
+
+### Visualization Functions
+
+**`plot_transient_raster()`** - Creates raster plots of dopamine transients.
+
+- **Purpose**: Visualizes transient timing across development
+- **Key Parameters**: `method`, `window`, `region`, `ref_line`, `point_size`, `jitter_height`
+- **Used in**: [Individual Analysis](individual_analysis.html)
+- **Documentation**: Available in VNS man pages
+
+**`plot_td_panel()`** - Creates panel plots for temporal difference metrics.
+
+- **Purpose**: Visualizes population-level temporal dynamics
+- **Key Parameters**: `show_title`, `show_annotations`
+- **Used in**: [Population Analysis](population_analysis.html)
+- **Documentation**: Available in VNS man pages
+
+**`plot_amplitude_panel()`** - Creates panel plots for amplitude metrics.
+
+- **Purpose**: Visualizes population-level amplitude patterns
+- **Key Parameters**: `show_title`, `show_annotations`
+- **Used in**: [Population Analysis](population_analysis.html)
+- **Documentation**: Available in VNS man pages
+
+**`plot_cH_panel()`** - Creates panel plots for conditional entropy metrics.
+
+- **Purpose**: Visualizes population-level information flow
+- **Used in**: [Population Analysis](population_analysis.html)
+- **Documentation**: Available in VNS man pages
+
+**`plot_paired_metric_panel()`** - Creates paired comparison plots for metrics.
+
+- **Purpose**: Visualizes within-window paired comparisons
+- **Key Parameters**: `window_size`, `metric_order`, `ncol`
+- **Used in**: [Population Analysis](population_analysis.html)
+- **Documentation**: Available in VNS man pages
+
+**`plot_paired_metric_panel2()`** - Alternative paired comparison plots.
+
+- **Purpose**: Advanced paired comparison visualizations
+- **Key Parameters**: `window_size`, `ncol`
+- **Used in**: [Population Analysis](population_analysis.html)
+- **Documentation**: Available in VNS man pages
+
+\
+
+## External Resources
+
+### Package Documentation
+
+- **ASAP Package**: [GitHub Repository](https://github.com/LXiao06/ASAP) | [Online Documentation](https://lxiao06.github.io/ASAP/)
+- **VNS Package**: [GitHub Repository](https://github.com/LXiao06/VocalNeuroSync)
+
+### Installation
+
+```{r, eval = FALSE}
+# Install ASAP
+remotes::install_github("LXiao06/ASAP")
+# Or install local version
+remotes::install_local("pkgs/ASAP_0.3.3.tar.gz", dependencies = TRUE)
+
+# Install VNS
+remotes::install_github("LXiao06/VocalNeuroSync")
+# Or install local version
+remotes::install_local("pkgs/VNS_0.0.0.9000.tar.gz", dependencies = TRUE)
+```
+
+\
+
+
+
