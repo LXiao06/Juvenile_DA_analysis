@@ -32,6 +32,7 @@ For details, see the [ASAP GitHub repository](https://github.com/LXiao06/ASAP) a
 
 ### Architecture Overview
 ------
+**[Interactive Version of Analytics Architecture](https://lxiao06.github.io/Juvenile_DA_analysis/diagram/interactive-flowchart.html) :** - Explore the workflow with collapsible sections
+
 ![Flowchart](./diagram/flowchart.png)
 
-**Interactive Version:** [Analytics Architecture](https://lxiao06.github.io/Juvenile_DA_analysis/diagram/interactive-flowchart.html) - Explore the workflow with collapsible sections
