@@ -34,6 +34,12 @@ For details, see the [ASAP GitHub repository](https://github.com/LXiao06/ASAP) a
 \
 \
 
+Analytics Architecture
+------
+**Explore the complete analysis workflow with our [Interactive Flowchart](diagram/interactive-flowchart.html) with collapsible sections for detailed exploration**
+\
+\
+
 Tutorials
 ------
 <div style="font-size: 18px;">

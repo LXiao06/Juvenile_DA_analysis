@@ -28,3 +28,10 @@ For details, see the [ASAP GitHub repository](https://github.com/LXiao06/ASAP) a
 - [Individual Analysis](https://lxiao06.github.io/Juvenile_DA_analysis/individual_analysis.html)
   <br />
 - [Population Analysis](https://lxiao06.github.io/Juvenile_DA_analysis/population_analysis.html)
+  <br />
+
+### Architecture Overview
+------
+![Flowchart](./diagram/flowchart.png)
+
+**Interactive Version:** [Analytics Architecture](https://lxiao06.github.io/Juvenile_DA_analysis/diagram/interactive-flowchart.html) - Explore the workflow with collapsible sections

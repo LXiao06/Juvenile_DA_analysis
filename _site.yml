@@ -6,6 +6,8 @@ navbar:
   left:
     - text: "Home"
       href: index.html
+    - text: "Analytics Architecture"
+      href: diagram/interactive-flowchart.html
     - text: "Data Processing"
       href: data_processing.html
     - text: "Individual Analysis"
@@ -17,7 +19,7 @@ navbar:
     - text: "GitHub"
       href: "https://github.com/LXiao06/Juvenile_DA_analysis"
 
-exclude: ["dev", "data", "pkgs", "LICENSE", "README.md"] 
+exclude: ["dev", "data", "pkgs", "LICENSE", "README.md"]
 
 output:
   html_document:
