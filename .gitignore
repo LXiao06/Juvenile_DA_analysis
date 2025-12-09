@@ -9,6 +9,7 @@
 # User-specific files
 .Ruserdata
 dev/
+figs/
 
 # Example code in package build process
 *-Ex.R
