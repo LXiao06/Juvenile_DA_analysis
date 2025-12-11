@@ -247,7 +247,7 @@ knitr::kable(all_summary, caption = "Bootstrap Analysis: All Metrics Summary", r
 
 ## Conclusion
 
-```{r, conclusion, echo = FALSE, eval = EVAL}
+```{r, conclusion, echo = FALSE, eval = EVAL, results = 'asis'}
 # Count metrics where bootstrap agrees with weighted LMM benchmark
 # Agreement = both significant OR both non-significant
 # (Bootstrap CI excludes zero matches whether weighted LMM was significant)
@@ -260,14 +260,14 @@ n_robust <- sum(all_summary$Significant == "Yes")
 n_total <- nrow(all_summary)
 robust_metrics <- all_summary$Metric[all_summary$Significant == "Yes"]
 non_robust_metrics <- all_summary$Metric[all_summary$Significant == "No"]
+
+cat("**Bootstrap balanced resampling confirms", n_robust, "robust developmental effects and", n_total - n_robust, "non-significant effects**, consistent with the inverse-weighted LMM benchmark.\n\n")
+
+cat("- **Robust effects** (95% CI excludes zero):", paste(robust_metrics, collapse = ", "), "\n")
+cat("- **Non-significant effects** (95% CI includes zero):", paste(non_robust_metrics, collapse = ", "), "\n\n")
+
+cat("Both methods agree, indicating conclusions are not driven by sample imbalance.\n")
 ```
-
-**Bootstrap balanced resampling confirms `r n_robust` robust developmental effects and `r n_total - n_robust` non-significant effects**, consistent with the inverse-weighted LMM benchmark.
-
-- **Robust effects** (95% CI excludes zero): `r paste(robust_metrics, collapse = ", ")`
-- **Non-significant effects** (95% CI includes zero): `r paste(non_robust_metrics, collapse = ", ")`
-
-Both methods agree, indicating conclusions are not driven by sample imbalance.
 
 \
 
