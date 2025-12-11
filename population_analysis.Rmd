@@ -25,7 +25,7 @@ EVAL <- FALSE  # Set to TRUE to switch to eval = TRUE, FALSE to use pre-generate
 > ### Install Required Packages
 >
 > ```{r, install_pkgs, eval = FALSE}
-> remotes::install_local(file.path(getwd(),"pkgs", "VNS_0.0.0.9000.tar.gz"),
+> remotes::install_local(file.path(getwd(),"pkgs", "VNS_0.0.0.9001.tar.gz"),
 >                       dependencies = TRUE)
 > ```
 
