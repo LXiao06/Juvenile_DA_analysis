@@ -1,0 +1,1083 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+<meta charset="utf-8" />
+<meta name="generator" content="pandoc" />
+<meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
+
+
+
+
+<title>Function Reference</title>
+
+<script src="site_libs/header-attrs-2.30/header-attrs.js"></script>
+<script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href="site_libs/bootstrap-3.3.5/css/flatly.min.css" rel="stylesheet" />
+<script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
+<style>h1 {font-size: 34px;}
+       h1.title {font-size: 38px;}
+       h2 {font-size: 30px;}
+       h3 {font-size: 24px;}
+       h4 {font-size: 18px;}
+       h5 {font-size: 16px;}
+       h6 {font-size: 12px;}
+       code {color: inherit; background-color: rgba(0, 0, 0, 0.04);}
+       pre:not([class]) { background-color: white }</style>
+<script src="site_libs/jqueryui-1.13.2/jquery-ui.min.js"></script>
+<link href="site_libs/tocify-1.9.1/jquery.tocify.css" rel="stylesheet" />
+<script src="site_libs/tocify-1.9.1/jquery.tocify.js"></script>
+<script src="site_libs/navigation-1.1/tabsets.js"></script>
+<link href="site_libs/pagedtable-1.1/css/pagedtable.css" rel="stylesheet" />
+<script src="site_libs/pagedtable-1.1/js/pagedtable.js"></script>
+
+<style type="text/css">
+  code{white-space: pre-wrap;}
+  span.smallcaps{font-variant: small-caps;}
+  span.underline{text-decoration: underline;}
+  div.column{display: inline-block; vertical-align: top; width: 50%;}
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+  ul.task-list{list-style: none;}
+    </style>
+
+
+
+<style type="text/css">
+  code {
+    white-space: pre;
+  }
+  .sourceCode {
+    overflow: visible;
+  }
+</style>
+<style type="text/css" data-origin="pandoc">
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {  background-color: #f8f8f8; }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ef2929; } /* Alert */
+code span.an { color: #8f5902; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #204a87; } /* Attribute */
+code span.bn { color: #0000cf; } /* BaseN */
+code span.cf { color: #204a87; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4e9a06; } /* Char */
+code span.cn { color: #8f5902; } /* Constant */
+code span.co { color: #8f5902; font-style: italic; } /* Comment */
+code span.cv { color: #8f5902; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #8f5902; font-weight: bold; font-style: italic; } /* Documentation */
+code span.dt { color: #204a87; } /* DataType */
+code span.dv { color: #0000cf; } /* DecVal */
+code span.er { color: #a40000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #0000cf; } /* Float */
+code span.fu { color: #204a87; font-weight: bold; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #8f5902; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #204a87; font-weight: bold; } /* Keyword */
+code span.op { color: #ce5c00; font-weight: bold; } /* Operator */
+code span.ot { color: #8f5902; } /* Other */
+code span.pp { color: #8f5902; font-style: italic; } /* Preprocessor */
+code span.sc { color: #ce5c00; font-weight: bold; } /* SpecialChar */
+code span.ss { color: #4e9a06; } /* SpecialString */
+code span.st { color: #4e9a06; } /* String */
+code span.va { color: #000000; } /* Variable */
+code span.vs { color: #4e9a06; } /* VerbatimString */
+code span.wa { color: #8f5902; font-weight: bold; font-style: italic; } /* Warning */
+
+</style>
+<script>
+// apply pandoc div.sourceCode style to pre.sourceCode instead
+(function() {
+  var sheets = document.styleSheets;
+  for (var i = 0; i < sheets.length; i++) {
+    if (sheets[i].ownerNode.dataset["origin"] !== "pandoc") continue;
+    try { var rules = sheets[i].cssRules; } catch (e) { continue; }
+    var j = 0;
+    while (j < rules.length) {
+      var rule = rules[j];
+      // check if there is a div.sourceCode rule
+      if (rule.type !== rule.STYLE_RULE || rule.selectorText !== "div.sourceCode") {
+        j++;
+        continue;
+      }
+      var style = rule.style.cssText;
+      // check if color or background-color is set
+      if (rule.style.color === '' && rule.style.backgroundColor === '') {
+        j++;
+        continue;
+      }
+      // replace div.sourceCode by a pre.sourceCode rule
+      sheets[i].deleteRule(j);
+      sheets[i].insertRule('pre.sourceCode{' + style + '}', j);
+    }
+  }
+})();
+</script>
+
+
+
+
+
+
+
+<style type = "text/css">
+.main-container {
+  max-width: 940px;
+  margin-left: auto;
+  margin-right: auto;
+}
+img {
+  max-width:100%;
+}
+.tabbed-pane {
+  padding-top: 12px;
+}
+.html-widget {
+  margin-bottom: 20px;
+}
+button.code-folding-btn:focus {
+  outline: none;
+}
+summary {
+  display: list-item;
+}
+details > summary > p:only-child {
+  display: inline;
+}
+pre code {
+  padding: 0;
+}
+</style>
+
+
+<style type="text/css">
+.dropdown-submenu {
+  position: relative;
+}
+.dropdown-submenu>.dropdown-menu {
+  top: 0;
+  left: 100%;
+  margin-top: -6px;
+  margin-left: -1px;
+  border-radius: 0 6px 6px 6px;
+}
+.dropdown-submenu:hover>.dropdown-menu {
+  display: block;
+}
+.dropdown-submenu>a:after {
+  display: block;
+  content: " ";
+  float: right;
+  width: 0;
+  height: 0;
+  border-color: transparent;
+  border-style: solid;
+  border-width: 5px 0 5px 5px;
+  border-left-color: #cccccc;
+  margin-top: 5px;
+  margin-right: -10px;
+}
+.dropdown-submenu:hover>a:after {
+  border-left-color: #adb5bd;
+}
+.dropdown-submenu.pull-left {
+  float: none;
+}
+.dropdown-submenu.pull-left>.dropdown-menu {
+  left: -100%;
+  margin-left: 10px;
+  border-radius: 6px 0 6px 6px;
+}
+</style>
+
+<script type="text/javascript">
+// manage active state of menu based on current page
+$(document).ready(function () {
+  // active menu anchor
+  href = window.location.pathname
+  href = href.substr(href.lastIndexOf('/') + 1)
+  if (href === "")
+    href = "index.html";
+  var menuAnchor = $('a[href="' + href + '"]');
+
+  // mark the anchor link active (and if it's in a dropdown, also mark that active)
+  var dropdown = menuAnchor.closest('li.dropdown');
+  if (window.bootstrap) { // Bootstrap 4+
+    menuAnchor.addClass('active');
+    dropdown.find('> .dropdown-toggle').addClass('active');
+  } else { // Bootstrap 3
+    menuAnchor.parent().addClass('active');
+    dropdown.addClass('active');
+  }
+
+  // Navbar adjustments
+  var navHeight = $(".navbar").first().height() + 15;
+  var style = document.createElement('style');
+  var pt = "padding-top: " + navHeight + "px; ";
+  var mt = "margin-top: -" + navHeight + "px; ";
+  var css = "";
+  // offset scroll position for anchor links (for fixed navbar)
+  for (var i = 1; i <= 6; i++) {
+    css += ".section h" + i + "{ " + pt + mt + "}\n";
+  }
+  style.innerHTML = "body {" + pt + "padding-bottom: 40px; }\n" + css;
+  document.head.appendChild(style);
+});
+</script>
+
+<!-- tabsets -->
+
+<style type="text/css">
+.tabset-dropdown > .nav-tabs {
+  display: inline-table;
+  max-height: 500px;
+  min-height: 44px;
+  overflow-y: auto;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.tabset-dropdown > .nav-tabs > li.active:before, .tabset-dropdown > .nav-tabs.nav-tabs-open:before {
+  content: "\e259";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li.active:before {
+  content: "\e258";
+  font-family: 'Glyphicons Halflings';
+  border: none;
+}
+
+.tabset-dropdown > .nav-tabs > li.active {
+  display: block;
+}
+
+.tabset-dropdown > .nav-tabs > li > a,
+.tabset-dropdown > .nav-tabs > li > a:focus,
+.tabset-dropdown > .nav-tabs > li > a:hover {
+  border: none;
+  display: inline-block;
+  border-radius: 4px;
+  background-color: transparent;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li {
+  display: block;
+  float: none;
+}
+
+.tabset-dropdown > .nav-tabs > li {
+  display: none;
+}
+</style>
+
+<!-- code folding -->
+
+
+
+<style type="text/css">
+
+#TOC {
+  margin: 25px 0px 20px 0px;
+}
+@media (max-width: 768px) {
+#TOC {
+  position: relative;
+  width: 100%;
+}
+}
+
+@media print {
+.toc-content {
+  /* see https://github.com/w3c/csswg-drafts/issues/4434 */
+  float: right;
+}
+}
+
+.toc-content {
+  padding-left: 30px;
+  padding-right: 40px;
+}
+
+div.main-container {
+  max-width: 1200px;
+}
+
+div.tocify {
+  width: 20%;
+  max-width: 260px;
+  max-height: 85%;
+}
+
+@media (min-width: 768px) and (max-width: 991px) {
+  div.tocify {
+    width: 25%;
+  }
+}
+
+@media (max-width: 767px) {
+  div.tocify {
+    width: 100%;
+    max-width: none;
+  }
+}
+
+.tocify ul, .tocify li {
+  line-height: 20px;
+}
+
+.tocify-subheader .tocify-item {
+  font-size: 0.90em;
+}
+
+.tocify .list-group-item {
+  border-radius: 0px;
+}
+
+
+</style>
+
+
+
+</head>
+
+<body>
+
+
+<div class="container-fluid main-container">
+
+
+<!-- setup 3col/9col grid for toc_float and main content  -->
+<div class="row">
+<div class="col-xs-12 col-sm-4 col-md-3">
+<div id="TOC" class="tocify">
+</div>
+</div>
+
+<div class="toc-content col-xs-12 col-sm-8 col-md-9">
+
+
+
+
+<div class="navbar navbar-default  navbar-fixed-top" role="navigation">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-bs-toggle="collapse" data-target="#navbar" data-bs-target="#navbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="index.html">Juvenile DA Analysis</a>
+    </div>
+    <div id="navbar" class="navbar-collapse collapse">
+      <ul class="nav navbar-nav">
+        <li>
+  <a href="index.html">Home</a>
+</li>
+<li>
+  <a href="diagram/interactive-flowchart.html">Analytics Architecture</a>
+</li>
+<li>
+  <a href="data_processing.html">Data Processing</a>
+</li>
+<li>
+  <a href="individual_analysis.html">Individual Analysis</a>
+</li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+    Population Analysis
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="population_analysis.html">Overview</a>
+    </li>
+    <li>
+      <a href="weighted_LMMs.html">Weighted LMMs</a>
+    </li>
+    <li>
+      <a href="balanced_resampling.html">Balanced Resampling</a>
+    </li>
+  </ul>
+</li>
+<li>
+  <a href="reference.html">Reference</a>
+</li>
+<li>
+  <a href="https://github.com/LXiao06/Juvenile_DA_analysis">GitHub</a>
+</li>
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        
+      </ul>
+    </div><!--/.nav-collapse -->
+  </div><!--/.container -->
+</div><!--/.navbar -->
+
+<div id="header">
+
+
+
+<h1 class="title toc-ignore">Function Reference</h1>
+
+</div>
+
+
+<p><br />
+</p>
+<p><strong>This page provides comprehensive documentation for all
+functions used in the data processing, individual analysis, and
+population analysis tutorials. Functions are organized by workflow stage
+or package.</strong><br />
+<br />
+</p>
+<div id="function-usage-summary" class="section level2">
+<h2>Function Usage Summary</h2>
+<table>
+<colgroup>
+<col width="33%" />
+<col width="33%" />
+<col width="33%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th align="left"><strong>Workflow Stage</strong></th>
+<th align="left"><strong>Primary Functions</strong></th>
+<th align="left"><strong>Purpose</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left"><strong>Data Organization</strong></td>
+<td align="left"><code>organize_bird_files()</code>,
+<code>create_npm_object()</code></td>
+<td align="left">Structure raw data and initialize analysis object</td>
+</tr>
+<tr class="even">
+<td align="left"><strong>Audio Processing</strong></td>
+<td align="left"><a
+href="https://lxiao06.github.io/ASAP/reference/compute_wav_durations.html"><code>compute_wav_durations()</code></a>,
+<a
+href="https://lxiao06.github.io/ASAP/reference/create_audio_clip.html"><code>create_audio_clip()</code></a>,
+<a
+href="https://lxiao06.github.io/ASAP/reference/create_template.html"><code>create_template()</code></a>,
+<a
+href="https://lxiao06.github.io/ASAP/reference/detect_template.html"><code>detect_template()</code></a>,
+<a
+href="https://lxiao06.github.io/ASAP/reference/find_motif.html"><code>find_motif()</code></a>,
+<a
+href="https://lxiao06.github.io/ASAP/reference/find_bout.html"><code>find_bout()</code></a></td>
+<td align="left">Process song recordings and identify vocal
+elements</td>
+</tr>
+<tr class="odd">
+<td align="left"><strong>Photometry Processing</strong></td>
+<td align="left"><code>read_photometry()</code>,
+<code>process_photometry()</code>, <code>sync_epoch()</code>,
+<code>find_transients()</code>, <code>filter_peaks()</code></td>
+<td align="left">Process fiber photometry signals and detect neural
+events</td>
+</tr>
+<tr class="even">
+<td align="left"><strong>Individual Analysis</strong></td>
+<td align="left"><code>create_segment_table()</code>,
+<code>analyze_timing_shift()</code>,
+<code>analyze_amplitude_shift()</code>,
+<code>analyze_directional_cH()</code></td>
+<td align="left">Analyze individual animal patterns</td>
+</tr>
+<tr class="odd">
+<td align="left"><strong>Population Analysis</strong></td>
+<td align="left"><code>combine_animal_results()</code>,
+<code>analyze_td_metrics()</code>,
+<code>analyze_amplitude_metrics()</code>,
+<code>analyze_cH_metrics()</code></td>
+<td align="left">Combine and analyze population-level patterns</td>
+</tr>
+<tr class="even">
+<td align="left"><strong>Visualization</strong></td>
+<td align="left"><a
+href="https://lxiao06.github.io/ASAP/reference/plot_heatmap.html"><code>plot_heatmap()</code></a>,
+<code>plot_transient_raster()</code>, <code>plot_td_panel()</code>,
+<code>plot_amplitude_panel()</code>, <code>plot_cH_panel()</code></td>
+<td align="left">Create figures and visualizations</td>
+</tr>
+</tbody>
+</table>
+<p><br />
+</p>
+</div>
+<div id="asap-package-functions" class="section level2">
+<h2>ASAP Package Functions</h2>
+<p>The ASAP (Automated Song Analysis Pipeline) package provides
+functions for processing audio recordings and analyzing vocal
+behavior.</p>
+<div id="audio-processing" class="section level3">
+<h3>Audio Processing</h3>
+<p><strong><code>compute_wav_durations()</code></strong> - Calculates
+the total duration of all audio files.</p>
+<ul>
+<li><strong>Purpose</strong>: Computes audio file durations for
+processing pipeline</li>
+<li><strong>Used in</strong>: <a href="data_processing.html">Data
+Processing</a></li>
+<li><strong>Documentation</strong>: <a
+href="https://lxiao06.github.io/ASAP/reference/compute_wav_durations.html">ASAP
+Reference</a></li>
+</ul>
+<p><strong><code>create_audio_clip()</code></strong> - Extracts specific
+time segments for manual template selection.</p>
+<ul>
+<li><strong>Purpose</strong>: Creates audio clips for template
+creation</li>
+<li><strong>Key Parameters</strong>: <code>indices</code>,
+<code>start_time</code>, <code>end_time</code>,
+<code>clip_names</code></li>
+<li><strong>Used in</strong>: <a href="data_processing.html">Data
+Processing</a></li>
+<li><strong>Documentation</strong>: <a
+href="https://lxiao06.github.io/ASAP/reference/create_audio_clip.html">ASAP
+Reference</a></li>
+</ul>
+<p><strong><code>create_template()</code></strong> - Defines a spectral
+template for song syllable detection.</p>
+<ul>
+<li><strong>Purpose</strong>: Creates spectral templates for automated
+syllable detection</li>
+<li><strong>Key Parameters</strong>: <code>template_name</code>,
+<code>clip_name</code>, <code>start_time</code>, <code>end_time</code>,
+<code>freq_min</code>, <code>freq_max</code></li>
+<li><strong>Used in</strong>: <a href="data_processing.html">Data
+Processing</a></li>
+<li><strong>Documentation</strong>: <a
+href="https://lxiao06.github.io/ASAP/reference/create_template.html">ASAP
+Reference</a></li>
+</ul>
+<p><strong><code>detect_template()</code></strong> - Finds all
+occurrences of the template across recordings.</p>
+<ul>
+<li><strong>Purpose</strong>: Detects syllable occurrences using
+spectral templates</li>
+<li><strong>Key Parameters</strong>: <code>template_name</code>,
+<code>day</code>, <code>indices</code>, <code>proximity_window</code>,
+<code>threshold</code></li>
+<li><strong>Used in</strong>: <a href="data_processing.html">Data
+Processing</a></li>
+<li><strong>Documentation</strong>: <a
+href="https://lxiao06.github.io/ASAP/reference/detect_template.html">ASAP
+Reference</a></li>
+</ul>
+<p><strong><code>find_motif()</code></strong> - Identifies repeated
+sequences of syllables (vocal motifs).</p>
+<ul>
+<li><strong>Purpose</strong>: Groups syllables into motif sequences</li>
+<li><strong>Key Parameters</strong>: <code>template_name</code>,
+<code>pre_time</code>, <code>lag_time</code></li>
+<li><strong>Used in</strong>: <a href="data_processing.html">Data
+Processing</a></li>
+<li><strong>Documentation</strong>: <a
+href="https://lxiao06.github.io/ASAP/reference/find_motif.html">ASAP
+Reference</a></li>
+</ul>
+<p><strong><code>find_bout()</code></strong> - Groups individual vocal
+elements into singing bouts.</p>
+<ul>
+<li><strong>Purpose</strong>: Identifies continuous singing
+episodes</li>
+<li><strong>Key Parameters</strong>: <code>min_duration</code>,
+<code>summary</code>, <code>gap_duration</code></li>
+<li><strong>Used in</strong>: <a href="data_processing.html">Data
+Processing</a></li>
+<li><strong>Documentation</strong>: <a
+href="https://lxiao06.github.io/ASAP/reference/find_bout.html">ASAP
+Reference</a></li>
+</ul>
+</div>
+<div id="visualization" class="section level3">
+<h3>Visualization</h3>
+<p><strong><code>plot_heatmap()</code></strong> - Visualizes motif or
+bout structure and patterns across development.</p>
+<ul>
+<li><strong>Purpose</strong>: Creates heatmap visualizations of vocal
+development</li>
+<li><strong>Key Parameters</strong>: <code>segment_type</code>,
+<code>balanced</code>, <code>window</code>, <code>contrast</code>,
+<code>reference_lines</code></li>
+<li><strong>Used in</strong>: <a href="data_processing.html">Data
+Processing</a>, <a href="individual_analysis.html">Individual
+Analysis</a></li>
+<li><strong>Documentation</strong>: <a
+href="https://lxiao06.github.io/ASAP/reference/plot_heatmap.html">ASAP
+Reference</a></li>
+</ul>
+<p><br />
+</p>
+</div>
+</div>
+<div id="vns-package-functions" class="section level2">
+<h2>VNS Package Functions</h2>
+<p>The VNS (VocalNeuroSync) package provides functions for processing
+fiber photometry data and analyzing neural-vocal synchronization.</p>
+<div id="data-organization" class="section level3">
+<h3>Data Organization</h3>
+<p><strong><code>organize_bird_files()</code></strong> - Organizes raw
+data files from individual animals into a structured format suitable for
+analysis.</p>
+<ul>
+<li><strong>Purpose</strong>: Restructures raw data directories for
+consistent processing</li>
+<li><strong>Key Parameters</strong>: <code>root_dir</code>,
+<code>bird_id</code>, <code>dob</code>, <code>output_dir</code>,
+<code>file_prefixes</code>, <code>file_extensions</code></li>
+<li><strong>Used in</strong>: <a href="data_processing.html">Data
+Processing</a></li>
+<li><strong>Documentation</strong>: Available in VNS man pages</li>
+</ul>
+</div>
+<div id="npm-object-creation" class="section level3">
+<h3>NPM Object Creation</h3>
+<p><strong><code>create_npm_object()</code></strong> - Creates the main
+analysis object containing both photometry and audio data with
+metadata.</p>
+<ul>
+<li><strong>Purpose</strong>: Initializes the core data structure for
+all subsequent analyses</li>
+<li><strong>Key Parameters</strong>: <code>base_path</code>,
+<code>labels</code>, <code>imageArea</code>, <code>sensor</code>,
+<code>fps</code>, <code>numChannel</code></li>
+<li><strong>Used in</strong>: <a href="data_processing.html">Data
+Processing</a></li>
+<li><strong>Documentation</strong>: Available in VNS man pages</li>
+</ul>
+</div>
+<div id="data-import-and-preprocessing" class="section level3">
+<h3>Data Import and Preprocessing</h3>
+<p><strong><code>read_photometry()</code></strong> - Imports raw
+photometry data.</p>
+<ul>
+<li><strong>Purpose</strong>: Reads photometry data files into the npm
+object</li>
+<li><strong>Used in</strong>: <a href="data_processing.html">Data
+Processing</a></li>
+<li><strong>Documentation</strong>: Available in VNS man pages</li>
+</ul>
+<p><strong><code>qc_photometry()</code></strong> - Performs optional
+quality control checks.</p>
+<ul>
+<li><strong>Purpose</strong>: Quality control assessment of photometry
+signals</li>
+<li><strong>Used in</strong>: <a href="data_processing.html">Data
+Processing</a></li>
+<li><strong>Documentation</strong>: Available in VNS man pages</li>
+</ul>
+<p><strong><code>process_photometry()</code></strong> - Applies baseline
+correction and processes the signal.</p>
+<ul>
+<li><strong>Purpose</strong>: Baseline correction and signal
+preprocessing</li>
+<li><strong>Key Parameters</strong>: <code>by_epoch</code>,
+<code>epoch_window_quantile</code></li>
+<li><strong>Used in</strong>: <a href="data_processing.html">Data
+Processing</a></li>
+<li><strong>Documentation</strong>: Available in VNS man pages</li>
+</ul>
+</div>
+<div id="signal-synchronization" class="section level3">
+<h3>Signal Synchronization</h3>
+<p><strong><code>sync_epoch()</code></strong> - Synchronizes photometry
+signals across epochs.</p>
+<ul>
+<li><strong>Purpose</strong>: Aligns signals for temporal analysis</li>
+<li><strong>Key Parameters</strong>: <code>scale</code>,
+<code>data_type</code>, <code>by_peak_value</code></li>
+<li><strong>Used in</strong>: <a href="data_processing.html">Data
+Processing</a></li>
+<li><strong>Documentation</strong>: Available in VNS man pages</li>
+</ul>
+<p><strong><code>find_transients()</code></strong> - Detects dopamine
+transients using peak detection algorithms.</p>
+<ul>
+<li><strong>Purpose</strong>: Identifies dopamine transient events</li>
+<li><strong>Key Parameters</strong>: <code>method</code>,
+<code>lag</code>, <code>threshold</code>, <code>influence</code></li>
+<li><strong>Used in</strong>: <a href="data_processing.html">Data
+Processing</a></li>
+<li><strong>Documentation</strong>: Available in VNS man pages</li>
+</ul>
+<p><strong><code>filter_peaks()</code></strong> - Measures peak
+amplitude of dopamine signals within epochs.</p>
+<ul>
+<li><strong>Purpose</strong>: Quantifies peak amplitudes for amplitude
+analysis</li>
+<li><strong>Used in</strong>: <a href="data_processing.html">Data
+Processing</a></li>
+<li><strong>Documentation</strong>: Available in VNS man pages</li>
+</ul>
+</div>
+<div id="segmentation-and-analysis" class="section level3">
+<h3>Segmentation and Analysis</h3>
+<p><strong><code>create_segment_table()</code></strong> - Creates
+segmented data tables for temporal analysis.</p>
+<ul>
+<li><strong>Purpose</strong>: Segments data into time windows for
+analysis</li>
+<li><strong>Key Parameters</strong>: <code>region</code>,
+<code>window</code>, <code>n_segments</code>, <code>min_epoch</code>,
+<code>method</code>, <code>data_type</code></li>
+<li><strong>Used in</strong>: <a
+href="individual_analysis.html">Individual Analysis</a>, <a
+href="population_analysis.html">Population Analysis</a></li>
+<li><strong>Documentation</strong>: Available in VNS man pages</li>
+</ul>
+</div>
+<div id="individual-analysis-functions" class="section level3">
+<h3>Individual Analysis Functions</h3>
+<p><strong><code>analyze_timing_shift()</code></strong> - Analyzes
+temporal shifts in dopamine transients.</p>
+<ul>
+<li><strong>Purpose</strong>: Quantifies timing changes across
+development</li>
+<li><strong>Key Parameters</strong>: <code>method</code>,
+<code>segment_duration_ms</code>, <code>bandwidth</code>,
+<code>highlight_position</code></li>
+<li><strong>Used in</strong>: <a
+href="individual_analysis.html">Individual Analysis</a></li>
+<li><strong>Documentation</strong>: Available in VNS man pages</li>
+</ul>
+<p><strong><code>analyze_amplitude_shift()</code></strong> - Analyzes
+amplitude shifts between early and late segments.</p>
+<ul>
+<li><strong>Purpose</strong>: Quantifies amplitude redistribution
+patterns</li>
+<li><strong>Key Parameters</strong>: <code>output</code>,
+<code>segment_duration_ms</code>, <code>segments_per_label</code>,
+<code>label_pair</code></li>
+<li><strong>Used in</strong>: <a
+href="individual_analysis.html">Individual Analysis</a></li>
+<li><strong>Documentation</strong>: Available in VNS man pages</li>
+</ul>
+<p><strong><code>analyze_amplitude_redistribution()</code></strong> -
+Analyzes amplitude redistribution across segment pairs.</p>
+<ul>
+<li><strong>Purpose</strong>: Examines amplitude changes across multiple
+segment combinations</li>
+<li><strong>Key Parameters</strong>: <code>output</code>,
+<code>segment_duration_ms</code>, <code>segments_per_label</code>,
+<code>step_size</code></li>
+<li><strong>Used in</strong>: <a
+href="individual_analysis.html">Individual Analysis</a></li>
+<li><strong>Documentation</strong>: Available in VNS man pages</li>
+</ul>
+<p><strong><code>analyze_directional_cH()</code></strong> - Analyzes
+directional conditional entropy between segments.</p>
+<ul>
+<li><strong>Purpose</strong>: Quantifies information flow and predictive
+relationships</li>
+<li><strong>Key Parameters</strong>: <code>source_seg</code>,
+<code>target_seg</code>, <code>output</code></li>
+<li><strong>Used in</strong>: <a
+href="individual_analysis.html">Individual Analysis</a>, <a
+href="population_analysis.html">Population Analysis</a></li>
+<li><strong>Documentation</strong>: Available in VNS man pages</li>
+</ul>
+<p><strong><code>analyze_directional_info_flow()</code></strong> -
+Analyzes directional information flow across development.</p>
+<ul>
+<li><strong>Purpose</strong>: Examines information flow changes over
+time</li>
+<li><strong>Key Parameters</strong>: <code>step_size</code></li>
+<li><strong>Used in</strong>: <a
+href="individual_analysis.html">Individual Analysis</a></li>
+<li><strong>Documentation</strong>: Available in VNS man pages</li>
+</ul>
+</div>
+<div id="population-analysis-functions" class="section level3">
+<h3>Population Analysis Functions</h3>
+<p><strong><code>combine_animal_results()</code></strong> - Combines
+individual animal results into population datasets.</p>
+<ul>
+<li><strong>Purpose</strong>: Merges individual analysis results for
+population-level analysis</li>
+<li><strong>Used in</strong>: <a
+href="population_analysis.html">Population Analysis</a></li>
+<li><strong>Documentation</strong>: Available in VNS man pages</li>
+</ul>
+<p><strong><code>analyze_td_metrics()</code></strong> - Performs linear
+mixed-effects modeling on temporal difference metrics.</p>
+<ul>
+<li><strong>Purpose</strong>: Population-level statistical analysis of
+temporal dynamics</li>
+<li><strong>Used in</strong>: <a
+href="population_analysis.html">Population Analysis</a></li>
+<li><strong>Documentation</strong>: Available in VNS man pages</li>
+</ul>
+<p><strong><code>analyze_amplitude_metrics()</code></strong> - Performs
+linear mixed-effects modeling on amplitude metrics.</p>
+<ul>
+<li><strong>Purpose</strong>: Population-level statistical analysis of
+amplitude patterns</li>
+<li><strong>Used in</strong>: <a
+href="population_analysis.html">Population Analysis</a></li>
+<li><strong>Documentation</strong>: Available in VNS man pages</li>
+</ul>
+<p><strong><code>analyze_cH_metrics()</code></strong> - Performs linear
+mixed-effects modeling on conditional entropy metrics.</p>
+<ul>
+<li><strong>Purpose</strong>: Population-level statistical analysis of
+information flow</li>
+<li><strong>Used in</strong>: <a
+href="population_analysis.html">Population Analysis</a></li>
+<li><strong>Documentation</strong>: Available in VNS man pages</li>
+</ul>
+<p><strong><code>analyze_within_window_trends()</code></strong> -
+Analyzes trends within sliding temporal windows.</p>
+<ul>
+<li><strong>Purpose</strong>: Examines short-term developmental
+changes</li>
+<li><strong>Key Parameters</strong>: <code>test_method</code>,
+<code>window_size</code>, <code>plot_results</code></li>
+<li><strong>Used in</strong>: <a
+href="population_analysis.html">Population Analysis</a></li>
+<li><strong>Documentation</strong>: Available in VNS man pages</li>
+</ul>
+<p><strong><code>analyze_within_window_trends2()</code></strong> -
+Alternative within-window analysis with mixed-effects models.</p>
+<ul>
+<li><strong>Purpose</strong>: Advanced within-window analysis with
+mixed-effects modeling</li>
+<li><strong>Key Parameters</strong>: <code>model</code>,
+<code>test_method</code>, <code>window_size</code>,
+<code>plot_results</code></li>
+<li><strong>Used in</strong>: <a
+href="population_analysis.html">Population Analysis</a></li>
+<li><strong>Documentation</strong>: Available in VNS man pages</li>
+</ul>
+<p><strong><code>analyze_within_window_info_flow()</code></strong> -
+Analyzes information flow within sliding windows.</p>
+<ul>
+<li><strong>Purpose</strong>: Examines short-term information flow
+changes</li>
+<li><strong>Key Parameters</strong>: <code>model</code>,
+<code>window_size</code>, <code>plot_results</code></li>
+<li><strong>Used in</strong>: <a
+href="population_analysis.html">Population Analysis</a></li>
+<li><strong>Documentation</strong>: Available in VNS man pages</li>
+</ul>
+</div>
+<div id="visualization-functions" class="section level3">
+<h3>Visualization Functions</h3>
+<p><strong><code>plot_transient_raster()</code></strong> - Creates
+raster plots of dopamine transients.</p>
+<ul>
+<li><strong>Purpose</strong>: Visualizes transient timing across
+development</li>
+<li><strong>Key Parameters</strong>: <code>method</code>,
+<code>window</code>, <code>region</code>, <code>ref_line</code>,
+<code>point_size</code>, <code>jitter_height</code></li>
+<li><strong>Used in</strong>: <a
+href="individual_analysis.html">Individual Analysis</a></li>
+<li><strong>Documentation</strong>: Available in VNS man pages</li>
+</ul>
+<p><strong><code>plot_td_panel()</code></strong> - Creates panel plots
+for temporal difference metrics.</p>
+<ul>
+<li><strong>Purpose</strong>: Visualizes population-level temporal
+dynamics</li>
+<li><strong>Key Parameters</strong>: <code>show_title</code>,
+<code>show_annotations</code></li>
+<li><strong>Used in</strong>: <a
+href="population_analysis.html">Population Analysis</a></li>
+<li><strong>Documentation</strong>: Available in VNS man pages</li>
+</ul>
+<p><strong><code>plot_amplitude_panel()</code></strong> - Creates panel
+plots for amplitude metrics.</p>
+<ul>
+<li><strong>Purpose</strong>: Visualizes population-level amplitude
+patterns</li>
+<li><strong>Key Parameters</strong>: <code>show_title</code>,
+<code>show_annotations</code></li>
+<li><strong>Used in</strong>: <a
+href="population_analysis.html">Population Analysis</a></li>
+<li><strong>Documentation</strong>: Available in VNS man pages</li>
+</ul>
+<p><strong><code>plot_cH_panel()</code></strong> - Creates panel plots
+for conditional entropy metrics.</p>
+<ul>
+<li><strong>Purpose</strong>: Visualizes population-level information
+flow</li>
+<li><strong>Used in</strong>: <a
+href="population_analysis.html">Population Analysis</a></li>
+<li><strong>Documentation</strong>: Available in VNS man pages</li>
+</ul>
+<p><strong><code>plot_paired_metric_panel()</code></strong> - Creates
+paired comparison plots for metrics.</p>
+<ul>
+<li><strong>Purpose</strong>: Visualizes within-window paired
+comparisons</li>
+<li><strong>Key Parameters</strong>: <code>window_size</code>,
+<code>metric_order</code>, <code>ncol</code></li>
+<li><strong>Used in</strong>: <a
+href="population_analysis.html">Population Analysis</a></li>
+<li><strong>Documentation</strong>: Available in VNS man pages</li>
+</ul>
+<p><strong><code>plot_paired_metric_panel2()</code></strong> -
+Alternative paired comparison plots.</p>
+<ul>
+<li><strong>Purpose</strong>: Advanced paired comparison
+visualizations</li>
+<li><strong>Key Parameters</strong>: <code>window_size</code>,
+<code>ncol</code></li>
+<li><strong>Used in</strong>: <a
+href="population_analysis.html">Population Analysis</a></li>
+<li><strong>Documentation</strong>: Available in VNS man pages</li>
+</ul>
+<p><br />
+</p>
+</div>
+</div>
+<div id="external-resources" class="section level2">
+<h2>External Resources</h2>
+<div id="package-documentation" class="section level3">
+<h3>Package Documentation</h3>
+<ul>
+<li><strong>ASAP Package</strong>: <a
+href="https://github.com/LXiao06/ASAP">GitHub Repository</a> | <a
+href="https://lxiao06.github.io/ASAP/">Online Documentation</a></li>
+<li><strong>VNS Package</strong>: <a
+href="https://github.com/LXiao06/VocalNeuroSync">GitHub
+Repository</a></li>
+</ul>
+</div>
+<div id="installation" class="section level3">
+<h3>Installation</h3>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" tabindex="-1"></a><span class="co"># Install ASAP</span></span>
+<span id="cb1-2"><a href="#cb1-2" tabindex="-1"></a>remotes<span class="sc">::</span><span class="fu">install_github</span>(<span class="st">&quot;LXiao06/ASAP&quot;</span>)</span>
+<span id="cb1-3"><a href="#cb1-3" tabindex="-1"></a><span class="co"># Or install local version</span></span>
+<span id="cb1-4"><a href="#cb1-4" tabindex="-1"></a>remotes<span class="sc">::</span><span class="fu">install_local</span>(<span class="st">&quot;pkgs/ASAP_0.3.3.tar.gz&quot;</span>, <span class="at">dependencies =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb1-5"><a href="#cb1-5" tabindex="-1"></a></span>
+<span id="cb1-6"><a href="#cb1-6" tabindex="-1"></a><span class="co"># Install VNS</span></span>
+<span id="cb1-7"><a href="#cb1-7" tabindex="-1"></a>remotes<span class="sc">::</span><span class="fu">install_github</span>(<span class="st">&quot;LXiao06/VocalNeuroSync&quot;</span>)</span>
+<span id="cb1-8"><a href="#cb1-8" tabindex="-1"></a><span class="co"># Or install local version</span></span>
+<span id="cb1-9"><a href="#cb1-9" tabindex="-1"></a>remotes<span class="sc">::</span><span class="fu">install_local</span>(<span class="st">&quot;pkgs/VNS_0.0.0.9000.tar.gz&quot;</span>, <span class="at">dependencies =</span> <span class="cn">TRUE</span>)</span></code></pre></div>
+<p><br />
+</p>
+</div>
+</div>
+
+
+
+</div>
+</div>
+
+</div>
+
+<script>
+
+// add bootstrap table styles to pandoc tables
+function bootstrapStylePandocTables() {
+  $('tr.odd').parent('tbody').parent('table').addClass('table table-condensed');
+}
+$(document).ready(function () {
+  bootstrapStylePandocTables();
+});
+
+
+</script>
+
+<!-- tabsets -->
+
+<script>
+$(document).ready(function () {
+  window.buildTabsets("TOC");
+});
+
+$(document).ready(function () {
+  $('.tabset-dropdown > .nav-tabs > li').click(function () {
+    $(this).parent().toggleClass('nav-tabs-open');
+  });
+});
+</script>
+
+<!-- code folding -->
+
+<script>
+$(document).ready(function ()  {
+
+    // temporarily add toc-ignore selector to headers for the consistency with Pandoc
+    $('.unlisted.unnumbered').addClass('toc-ignore')
+
+    // move toc-ignore selectors from section div to header
+    $('div.section.toc-ignore')
+        .removeClass('toc-ignore')
+        .children('h1,h2,h3,h4,h5').addClass('toc-ignore');
+
+    // establish options
+    var options = {
+      selectors: "h1,h2,h3",
+      theme: "bootstrap3",
+      context: '.toc-content',
+      hashGenerator: function (text) {
+        return text.replace(/[.\\/?&!#<>]/g, '').replace(/\s/g, '_');
+      },
+      ignoreSelector: ".toc-ignore",
+      scrollTo: 0
+    };
+    options.showAndHide = true;
+    options.smoothScroll = true;
+
+    // tocify
+    var toc = $("#TOC").tocify(options).data("toc-tocify");
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>
