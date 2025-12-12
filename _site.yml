@@ -17,9 +17,9 @@ navbar:
         - text: "Overview"
           href: population_analysis.html
         - text: "Weighted LMMs"
-          href: weighted LMMs.html
+          href: weighted_LMMs.html
         - text: "Balanced Resampling"
-          href: balanced Resampling.html
+          href: balanced_resampling.html
     - text: "Reference"
       href: reference.html
     - text: "GitHub"
