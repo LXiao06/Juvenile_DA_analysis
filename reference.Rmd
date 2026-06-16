@@ -24,7 +24,7 @@ knitr::opts_chunk$set(echo = TRUE, warning = FALSE, message = FALSE)
 | **Audio Processing** | [`compute_wav_durations()`](https://lxiao06.github.io/ASAP/reference/compute_wav_durations.html), [`create_audio_clip()`](https://lxiao06.github.io/ASAP/reference/create_audio_clip.html), [`create_template()`](https://lxiao06.github.io/ASAP/reference/create_template.html), [`detect_template()`](https://lxiao06.github.io/ASAP/reference/detect_template.html), [`find_motif()`](https://lxiao06.github.io/ASAP/reference/find_motif.html), [`find_bout()`](https://lxiao06.github.io/ASAP/reference/find_bout.html) | Process song recordings and identify vocal elements |
 | **Photometry Processing** | `read_photometry()`, `process_photometry()`, `sync_epoch()`, `find_transients()`, `filter_peaks()` | Process fiber photometry signals and detect neural events |
 | **Individual Analysis** | `create_segment_table()`, `analyze_timing_shift()`, `analyze_amplitude_shift()`, `analyze_directional_cH()` | Analyze individual animal patterns |
-| **Population Analysis** | `combine_animal_results()`, `analyze_td_metrics()`, `analyze_amplitude_metrics()`, `analyze_cH_metrics()` | Combine and analyze population-level patterns |
+| **Population Analysis** | `combine_animal_results()`, `analyze_td_metrics()`, `analyze_amplitude_metrics()`, `analyze_cH_metrics()`, `extract_photometry_data()`, `pool_photometry_data()`, `save_npy()` | Combine, pool, and analyze population-level patterns |
 | **Visualization** | [`plot_heatmap()`](https://lxiao06.github.io/ASAP/reference/plot_heatmap.html), `plot_transient_raster()`, `plot_td_panel()`, `plot_amplitude_panel()`, `plot_cH_panel()` | Create figures and visualizations |
 
 \
@@ -199,6 +199,27 @@ The VNS (VocalNeuroSync) package provides functions for processing fiber photome
 - **Documentation**: Available in VNS man pages
 
 ### Population Analysis Functions
+
+**`extract_photometry_data()`** - Extracts trial-aligned fiber photometry epoch data for specified developmental labels or conditions from an NPM object.
+
+- **Purpose**: Extracts photometry segments for individual developmental stages
+- **Key Parameters**: `npm`, `data_type`, `region`, `labels`, `ref_line`, `total_window`, `pre_motif_window`
+- **Used in**: [Photometry Modeling](photometry_modeling.html)
+- **Documentation**: Available in VNS man pages
+
+**`pool_photometry_data()`** - Pools individual animal data matrices into a single multi-trial matrix, with optional trial-number balancing.
+
+- **Purpose**: Combines multiple matrices and balances trial numbers across subjects
+- **Key Parameters**: `data_list`, `balance`
+- **Used in**: [Photometry Modeling](photometry_modeling.html)
+- **Documentation**: Available in VNS man pages
+
+**`save_npy()`** - Exports pooled R data arrays to NumPy `.npy` files for compatibility with Python-based pipelines.
+
+- **Purpose**: Exports data to Python-compatible `.npy` files
+- **Key Parameters**: `data`, `output_dir`, `python_path`, `file_prefix`
+- **Used in**: [Photometry Modeling](photometry_modeling.html)
+- **Documentation**: Available in VNS man pages
 
 **`combine_animal_results()`** - Combines individual animal results into population datasets.
 

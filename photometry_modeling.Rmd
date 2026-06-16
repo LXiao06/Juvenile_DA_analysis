@@ -40,7 +40,6 @@ The analysis addresses key limitations of standard supervised alignment approach
 >
 > 1.  **Unsupervised temporal discovery:** The model discovers precise temporal patterns without relying on pre-defined behavioral events.
 > 2.  **Robustness to variability:** By not anchoring to behavioral events, the model naturally accommodates trial-to-trial variability, enabling inclusion of both directed and undirected singing data.
-> 3.  **Applicable across data types:** Works on both raw dLight traces and detected transient events.
 
 \
 
@@ -72,6 +71,93 @@ cd affinewarp
 pip install .
 pip install -r requirements.txt
 ```
+
+\
+
+## Pooling Workflow
+
+This guide demonstrates how to generate and export population-level multi-trial photometry data by extracting trials from individual animals, balancing trial counts, and pooling them into unified arrays. The workflow consists of four main steps:
+
+### STEP 1: Load Individual NPM Objects
+
+Load the individual animal epoch-aligned fiber photometry object (an R RDS file containing both neural and vocal event data):
+
+```{r, step1_pool, eval = FALSE}
+library(VNS)
+
+npm <- readRDS("./dev/rds/npm_B633_epoch.rds")
+```
+
+\
+
+### STEP 2: Extract Trial-Aligned Photometry Data
+
+Extract trial segment matrices aligned to song motif onsets. In this example, we extract the baseline-subtracted `processed` photometry signals for specific developmental labels (ages `72dph` and `91dph`):
+
+```{r, step2_pool, eval = FALSE}
+TOTAL_WINDOW <- 2
+PRE_MOTIF_WINDOW <- 0.5
+
+B633_data <- extract_photometry_data(npm,
+                                     data_type = "processed",
+                                     region = "reg0",
+                                     labels = c("72dph", "91dph"),
+                                     ref_line = c(-0.4, 0.4),
+                                     total_window = TOTAL_WINDOW,
+                                     pre_motif_window = PRE_MOTIF_WINDOW)
+
+B633_early <- B633_data[["72dph"]]
+B633_late <- B633_data[["91dph"]]
+```
+
+\
+
+### STEP 3: Iterate Across All Animals
+
+Repeat the data loading and extraction pipeline (Steps 1 & 2) for all other individual animals in your study to generate their respective trial-aligned matrices (e.g., `P569_early`, `R561_early`, `P568_early`, `R562_late`, `P569_late`, etc.).
+
+\
+
+### STEP 4: Pool Matrices with Trial Balancing
+
+Pool individual bird matrices together into a population array for each developmental stage. Setting `balance = TRUE` downsamples trials so that all subjects contribute an equal number of trials, preventing any single bird from bias-dominating the pool:
+
+```{r, step4_pool, eval = FALSE}
+# Pool early development matrices
+early_pool <- pool_photometry_data(list(
+  B633 = B633_early,
+  P569 = P569_early,
+  R561 = R561_early,
+  P568 = P568_early),
+  balance = TRUE)
+
+# Pool late development matrices
+late_pool <- pool_photometry_data(list(
+  B633 = B633_late,
+  R562 = R562_late,
+  P569 = P569_late),
+  balance = TRUE)
+```
+
+\
+
+### STEP 5: Export to Python-Compatible NumPy Format
+
+Save the pooled population matrices as NumPy `.npy` files. These files will be stored in the `./data` folder, allowing them to be loaded directly in Python:
+
+```{r, step5_pool, eval = FALSE}
+save_npy(early_pool,
+         output_dir = "data",
+         python_path = "/usr/bin/python3",
+         file_prefix = "early_dev_pool")
+
+save_npy(late_pool,
+         output_dir = "data",
+         python_path = "/usr/bin/python3",
+         file_prefix = "late_dev_pool")
+```
+
+Once exported, these `.npy` files can be loaded directly into your Python workspace using `np.load()` for downstream shift-only warping analysis.
 
 \
 
@@ -165,10 +251,6 @@ late_dev_model.fit(late_dev, iterations=FIT_ITERATIONS)
 adult_model = ShiftWarping(maxlag=MAXLAG, smoothness_reg_scale=SMOOTHNESS_SCALE)
 adult_model.fit(raw_adult, iterations=FIT_ITERATIONS)
 
-print("All models fitted.")
-print(f"  Early dev template shape : {early_dev_model.template.shape}")
-print(f"  Late dev template shape  : {late_dev_model.template.shape}")
-print(f"  Adult template shape     : {adult_model.template.shape}")
 ```
 
 \
@@ -211,7 +293,7 @@ Full Adult), five rows:
 1. **Raw dLight** — unaligned fluorescence heatmap (trials × absolute time)
 2. **Model estimate** — the model's reconstruction via `model.predict()`
 3. **Shift-aligned raw** — raw traces reindexed by learned shifts
-4. **Trial average** — naive mean (black) vs. shift-aligned mean (colored), with 95% CI ribbons
+4. **Trial average** — naive mean (black) vs. shift-aligned mean (red), with 95% CI ribbons
 5. **Model template** — the consensus temporal profile (blue)
 
 > **Note:** The adult data (Column 3) has 41 time bins over 2 s (~48.8 ms/bin),
