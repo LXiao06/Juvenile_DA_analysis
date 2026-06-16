@@ -9,10 +9,15 @@ date: "2026-06-16"
 ---
 
 ```{r setup, include = FALSE}
-knitr::opts_chunk$set(echo = TRUE, warning = FALSE, message = FALSE)
-
 # Global variable to control code evaluation and figure generation
 EVAL <- FALSE  # Set to TRUE to enable code execution; FALSE uses pre-generated images
+
+knitr::opts_chunk$set(
+  echo = TRUE,
+  warning = FALSE,
+  message = FALSE,
+  python.reticulate = EVAL
+)
 ```
 
 \
