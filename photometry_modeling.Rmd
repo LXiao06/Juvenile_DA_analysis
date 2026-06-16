@@ -83,7 +83,7 @@ from affinewarp import ShiftWarping
 import matplotlib.pyplot as plt
 import os
 
-%matplotlib inline
+# %matplotlib inline
 
 # Figure output directory
 FIGURE_DIR = "./figs"
@@ -232,7 +232,7 @@ def plot_heatmap_col(ax, data, vmin, vmax, total_window, title=None, ylabel=None
     ax.set_xlabel("time (s)")
     ax.set_ylabel(ylabel or "renditions")
     if title:
-        ax.set_title(title, fontsize=13)
+        ax.set_title(title)
     return im
 
 
@@ -264,11 +264,11 @@ def plot_trial_average_col(ax, data, model, total_window, motif_onset,
     ax.fill_between(clock, mean_w - ci_w, mean_w + ci_w, color=color, alpha=0.2)
     ax.plot(clock, mean_n, color="k", label="Naive Mean")
     ax.fill_between(clock, mean_n - ci_n, mean_n + ci_n, color="k", alpha=0.2)
-    ax.axvline(x=motif_onset, color="k", linestyle="--", label="Motif Onset")
+    ax.axvline(x=motif_onset, color="k", linestyle="--")
     ax.set_xlabel("Time (s)")
     ax.set_ylabel("Trial-averaged dLight Activity")
     ax.set_ylim(ylim)
-    ax.legend(fontsize=8)
+    ax.legend()
 
 
 def plot_template_col(ax, data, model, total_window, motif_onset,
@@ -280,8 +280,8 @@ def plot_template_col(ax, data, model, total_window, motif_onset,
     ax.set_xlabel("Time (s)")
     ax.set_ylabel("DA Activity")
     ax.set_ylim(ylim)
-    ax.legend(fontsize=8)
-    ax.axvline(x=motif_onset, color="k", linestyle="--", label="Motif Onset")
+    ax.legend()
+    ax.axvline(x=motif_onset, color="k", linestyle="--")
     ax.text(motif_onset + 0.05, ylim[0], "Motif Onset",
             color="k", ha="left", va="bottom", fontsize=9)
 ```
@@ -295,9 +295,9 @@ col_titles = ["Early Development", "Late Development", "Full Adult"]
 row_titles = ["Raw", "Denoised", "Raw Aligned by Model"]
 
 datasets = [
-    (early_dev, early_dev_model, JUV_TOTAL_WINDOW,   JUV_MOTIF_ONSET,   "#E07040"),
-    (late_dev,  late_dev_model,  JUV_TOTAL_WINDOW,   JUV_MOTIF_ONSET,   "#4070E0"),
-    (raw_adult, adult_model,     ADULT_TOTAL_WINDOW, ADULT_MOTIF_ONSET, "#40A060"),
+    (early_dev, early_dev_model, JUV_TOTAL_WINDOW,   JUV_MOTIF_ONSET,   "r"),
+    (late_dev,  late_dev_model,  JUV_TOTAL_WINDOW,   JUV_MOTIF_ONSET,   "r"),
+    (raw_adult, adult_model,     ADULT_TOTAL_WINDOW, ADULT_MOTIF_ONSET, "r"),
 ]
 
 plt.rcParams.update({"font.size": 14})
@@ -306,14 +306,14 @@ fig, axes = plt.subplots(5, 3, figsize=(18, 20))
 for col, (data, model, tw, mo, col_color) in enumerate(datasets):
 
     # Row 0: Raw heatmap
-    plot_heatmap_col(axes[0, col], data, vmin, vmax, tw,
-                     title=col_titles[col])
+    im_raw = plot_heatmap_col(axes[0, col], data, vmin, vmax, tw,
+                              title=col_titles[col])
 
     # Row 1: Model estimate  (model.predict() with its own normalisation)
-    plot_model_estimate_col(axes[1, col], model, tw, data.shape[0])
+    im_est = plot_model_estimate_col(axes[1, col], model, tw, data.shape[0])
 
     # Row 2: Shift-aligned raw
-    plot_heatmap_col(axes[2, col], model.transform(data), vmin, vmax, tw)
+    im_alg = plot_heatmap_col(axes[2, col], model.transform(data), vmin, vmax, tw)
 
     # Row 3: Trial averages with CI
     plot_trial_average_col(axes[3, col], data, model, tw, mo,
@@ -322,14 +322,25 @@ for col, (data, model, tw, mo, col_color) in enumerate(datasets):
     # Row 4: Model template
     plot_template_col(axes[4, col], data, model, tw, mo)
 
+# Add colorbars to the right of column 2 (Full Adult) without shrinking column 2
+pos0 = axes[0, 2].get_position()
+cax0 = fig.add_axes([pos0.x1 + 0.015, pos0.y0, 0.012, pos0.height])
+fig.colorbar(im_raw, cax=cax0, label="dlight df/f")
+
+pos1 = axes[1, 2].get_position()
+cax1 = fig.add_axes([pos1.x1 + 0.015, pos1.y0, 0.012, pos1.height])
+fig.colorbar(im_est, cax=cax1, label="dlight df/f")
+
+pos2 = axes[2, 2].get_position()
+cax2 = fig.add_axes([pos2.x1 + 0.015, pos2.y0, 0.012, pos2.height])
+fig.colorbar(im_alg, cax=cax2, label="dlight df/f")
+
 # Row labels on the left margin (matching original notebook)
 for i, label in enumerate(row_titles):
     fig.text(0.02, 0.80 - i * 0.14, label,
              ha="left", va="center", fontsize=14, rotation=90)
 
 fig.subplots_adjust(hspace=0.30, wspace=0.35)
-fig.suptitle("Shift-Only Time Warping of Pooled dLight — Developmental Stages",
-             fontsize=15, y=1.002)
 
 fig_path = os.path.join(FIGURE_DIR, "photometry_modeling_main.png")
 fig.savefig(fig_path, dpi=150, bbox_inches="tight")
@@ -403,27 +414,69 @@ compare_templates(t_late,  t_adult, label_a="Late",  label_b="Adult")
 compare_templates(t_early, t_adult, label_a="Early", label_b="Adult")
 ```
 
-```{python, plot_template_comparison, fig.width=9, fig.height=4, eval = EVAL}
+```{python, plot_template_comparison, fig.width=11, fig.height=4.2, eval = EVAL}
 common_n = 200
-x = np.linspace(0, 1, common_n)
+norm_axis = np.linspace(0, 1, common_n)
 
-t_early_n = np.interp(x, np.linspace(0, 1, len(t_early)), t_early)
-t_late_n  = np.interp(x, np.linspace(0, 1, len(t_late)),  t_late)
-t_adult_n = np.interp(x, np.linspace(0, 1, len(t_adult)), t_adult)
+t_early_n = np.interp(norm_axis, np.linspace(0, 1, len(t_early)), t_early)
+t_late_n  = np.interp(norm_axis, np.linspace(0, 1, len(t_late)),  t_late)
+t_adult_n = np.interp(norm_axis, np.linspace(0, 1, len(t_adult)), t_adult)
 
-fig, ax = plt.subplots(figsize=(9, 4))
-ax.plot(x, t_early_n, label="Early Development", color="#E07040", lw=2)
-ax.plot(x, t_late_n,  label="Late Development",  color="#4070E0", lw=2)
-ax.plot(x, t_adult_n, label="Full Adult",        color="#40A060", lw=2, ls="--")
-ax.axhline(0, color="gray", lw=0.8, ls="--")
-ax.set_xlabel("Normalized time (0 = window start, 1 = window end)")
-ax.set_ylabel("dF/F (template)")
-ax.set_title("Warping Template Comparison Across Developmental Stages")
-ax.legend()
-fig.tight_layout()
+templates_norm = {
+    "Early Dev": t_early_n,
+    "Late Dev": t_late_n,
+    "Adult": t_adult_n,
+}
 
+C_ADULT = "#1f77b4"
+C_LATE  = "#90CAF9"
+C_EARLY = "#90CAF9"
+
+TICK_LOCS   = [0, 0.5, 1]
+TICK_LABELS = ["0", "0.5", "1"]
+X_LABEL     = "Normalized time"
+Y_LABEL     = "Model Template (dF/F)"
+
+fig_conv, axes = plt.subplots(1, 2, figsize=(11, 4.2), sharey=True)
+
+# ── Left panel: Late Dev vs Adult ────────────────────────────────────────────
+ax = axes[0]
+ax.plot(norm_axis, templates_norm["Adult"],
+        color=C_ADULT, ls="-", lw=2.5, label="Adult")
+ax.plot(norm_axis, templates_norm["Late Dev"],
+        color=C_LATE,  ls="-", lw=2.5, label="Late Dev")
+norm_onset_juv = JUV_MOTIF_ONSET / JUV_TOTAL_WINDOW
+norm_onset_adult = ADULT_MOTIF_ONSET / ADULT_TOTAL_WINDOW
+ax.axvline(norm_onset_juv, color=C_LATE, linestyle=":", lw=1.5)
+ax.axvline(norm_onset_adult, color=C_ADULT, linestyle=":", lw=1.5)
+ax.set_title("Late Dev vs Adult", fontsize=13)
+ax.set_xlabel(X_LABEL, fontsize=12)
+ax.set_ylabel(Y_LABEL, fontsize=12)
+ax.set_xticks(TICK_LOCS)
+ax.set_xticklabels(TICK_LABELS)
+ax.set_yticks([-0.5, 0, 0.5, 1.0])
+ax.legend(fontsize=12, loc="upper right")
+ax.spines[["top", "right"]].set_visible(False)
+ax.set_ylim(-0.6, 1.0)
+
+# ── Right panel: Late Dev vs Early Dev ───────────────────────────────────────
+ax2 = axes[1]
+ax2.plot(norm_axis, templates_norm["Late Dev"],
+         color=C_LATE,  ls="-",  lw=2.5, label="Late Dev")
+ax2.plot(norm_axis, templates_norm["Early Dev"],
+         color=C_EARLY, ls="--", lw=2.5, label="Early Dev")
+norm_onset_juv = JUV_MOTIF_ONSET / JUV_TOTAL_WINDOW
+ax2.axvline(norm_onset_juv, color="gray", linestyle=":", lw=1.5, label="Motif Onset")
+ax2.set_title("Late Dev vs Early Dev", fontsize=13)
+ax2.set_xlabel(X_LABEL, fontsize=12)
+ax2.set_xticks(TICK_LOCS)
+ax2.set_xticklabels(TICK_LABELS)
+ax2.legend(fontsize=11, loc="upper right")
+ax2.spines[["top", "right"]].set_visible(False)
+
+plt.tight_layout()
 fig_path = os.path.join(FIGURE_DIR, "photometry_modeling_templates.png")
-fig.savefig(fig_path, dpi=150, bbox_inches="tight")
+fig_conv.savefig(fig_path, dpi=150, bbox_inches="tight")
 print(f"Saved: {fig_path}")
 plt.show()
 ```
