@@ -20,6 +20,8 @@ navbar:
           href: weighted_LMMs.html
         - text: "Balanced Resampling"
           href: balanced_resampling.html
+        - text: "Photometry Modeling"
+          href: photometry_modeling.html
     - text: "Reference"
       href: reference.html
     - text: "GitHub"

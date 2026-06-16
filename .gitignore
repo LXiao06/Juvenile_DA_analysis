@@ -9,7 +9,7 @@
 # User-specific files
 .Ruserdata
 dev/
-figs/
+figs/archive
 
 # Example code in package build process
 *-Ex.R
