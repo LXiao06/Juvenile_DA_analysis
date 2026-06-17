@@ -1,0 +1,338 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Interactive Pipeline Flowchart</title>
+    <script type="module">
+        import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs';
+        
+        // Configure mermaid with security settings that allow interaction
+        mermaid.initialize({ 
+            startOnLoad: false,
+            securityLevel: 'loose',
+            theme: 'default'
+        });
+        
+        // Make mermaid available globally
+        window.mermaid = mermaid;
+    </script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            background-color: #f5f5f5;
+        }
+        
+        #diagram-container {
+            background-color: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        
+        .mermaid { 
+            text-align: center; 
+        }
+        
+        .controls {
+            margin-bottom: 20px;
+            text-align: center;
+        }
+        
+        .controls button {
+            margin: 5px;
+            padding: 8px 16px;
+            border: none;
+            border-radius: 4px;
+            background-color: #1976d2;
+            color: white;
+            cursor: pointer;
+            font-size: 14px;
+        }
+        
+        .controls button:hover {
+            background-color: #1565c0;
+        }
+        
+        .controls button.expanded {
+            background-color: #43a047;
+        }
+        
+        #status {
+            text-align: center;
+            margin-top: 10px;
+            font-size: 12px;
+            color: #666;
+        }
+    </style>
+</head>
+<body>
+    <div id="diagram-container">
+        <h1 style="text-align: center;">Interactive Pipeline Flowchart</h1>
+        <p style="text-align: center; color: #1976d2; font-size: 16px; margin-bottom: 20px;">
+            💡 <strong>Interactive Guide:</strong> Click the blue toggle buttons below to expand/collapse specific pipeline sections for detailed exploration
+        </p>
+
+        <div class="controls">
+            <button onclick="toggleSection('audio')" id="audio-btn">🎵 Audio Pipeline</button>
+            <button onclick="toggleSection('photometry')" id="photometry-btn">🧠 Photometry Pipeline</button>
+            <button onclick="toggleSection('temporal')" id="temporal-btn">⏱️ Temporal Analysis</button>
+            <button onclick="toggleSection('amplitude')" id="amplitude-btn">📈 Amplitude Analysis</button>
+            <button onclick="toggleSection('information')" id="information-btn">🔄 Information Analysis</button>
+            <button onclick="toggleSection('population')" id="population-btn">👥 Population Analysis</button>
+            <button onclick="toggleAll()">Toggle All</button>
+        </div>
+        
+        <div id="diagram"></div>
+        <div id="status">Click buttons above to expand/collapse sections</div>
+    </div>
+
+    <script>
+        // Track collapsed state
+        const collapsedSections = {
+            audio: true,
+            photometry: true,
+            temporal: true,
+            amplitude: true,
+            information: true,
+            population: true
+        };
+
+        function updateButtonStates() {
+            Object.keys(collapsedSections).forEach(section => {
+                const btn = document.getElementById(`${section}-btn`);
+                if (btn) {
+                    if (!collapsedSections[section]) {
+                        btn.classList.add('expanded');
+                    } else {
+                        btn.classList.remove('expanded');
+                    }
+                }
+            });
+        }
+
+        function toggleSection(section) {
+            collapsedSections[section] = !collapsedSections[section];
+            updateButtonStates();
+            renderDiagram();
+            
+            // Update status
+            const status = collapsedSections[section] ? 'collapsed' : 'expanded';
+            document.getElementById('status').textContent = `${section} section ${status}`;
+        }
+
+        function toggleAll() {
+            const allCollapsed = Object.values(collapsedSections).every(v => v);
+            Object.keys(collapsedSections).forEach(key => {
+                collapsedSections[key] = !allCollapsed;
+            });
+            updateButtonStates();
+            renderDiagram();
+            
+            const status = allCollapsed ? 'expanded' : 'collapsed';
+            document.getElementById('status').textContent = `All sections ${status}`;
+        }
+
+        async function renderDiagram() {
+            let diagramCode = `
+            flowchart TD
+                %% Data Sources
+                A[Raw Data Files<br/>📁 Audio + Photometry] --> B(organize_bird_files)
+
+                %% Data Processing Pipeline
+                B --> C(create_npm_object<br/>🔧 Initialize Analysis Object)
+
+                %% Audio Processing Branch (LEFT SIDE)
+                C --> D[Audio Processing Pipeline<br/>🎵 ASAP Functions]
+            `;
+
+            // Audio details - exact functions from flowchart.mmd
+            if (!collapsedSections.audio) {
+                diagramCode += `
+                D --> D1(compute_wav_durations)
+                D1 --> D2(create_audio_clip)
+                D2 --> D3(create_template)
+                D3 --> D4(detect_template)
+                D4 --> D5(find_motif)
+                D5 --> D6(find_bout)
+                D6 --> D7(plot_heatmap<br/>📊 Visualization)
+                D7 --> F
+                `;
+            } else {
+                diagramCode += `
+                D --> F
+                `;
+            }
+
+            // Photometry Branch - exact functions from flowchart.mmd
+            diagramCode += `
+                C --> E[Photometry Processing Pipeline<br/>🧠 VNS Functions]
+            `;
+
+            if (!collapsedSections.photometry) {
+                diagramCode += `
+                E --> E1(read_photometry)
+                E1 --> E2(qc_photometry<br/>⚠️ Optional)
+                E2 --> E3(process_photometry)
+                E3 --> E4(sync_epoch<br/>🔄 Scale=TRUE)
+                E4 --> E5(find_transients)
+                E5 --> E6(sync_epoch<br/>🔄 Transients)
+                E6 --> E7(filter_peaks)
+                E7 --> E8(sync_epoch<br/>🔄 Peak Values)
+                E8 --> F
+                `;
+            } else {
+                diagramCode += `
+                E --> F
+                `;
+            }
+
+            // Processed NPM Object
+            diagramCode += `
+                F[Processed NPM Object<br/>💾 npm_B633.rds]
+                F --> G[Individual Analysis<br/>👤 Single Animal]
+                G --> G1(create_segment_table)
+
+                %% Individual Analysis Branches
+                G1 --> H[Temporal Analysis<br/>⏱️ Timing Shifts]
+            `;
+
+            // Temporal Analysis - exact structure from flowchart.mmd
+            if (!collapsedSections.temporal) {
+                diagramCode += `
+                H --> H1(analyze_timing_shift)
+                H1 --> H2(plot_transient_raster<br/>📊 Figure B)
+                H1 --> H3[Density Ridge Plots<br/>📊 Figure C]
+                H1 --> K
+                `;
+            } else {
+                diagramCode += `
+                H --> K
+                `;
+            }
+
+            // Amplitude Analysis - exact structure from flowchart.mmd
+            diagramCode += `
+                G1 --> I[Amplitude Analysis<br/>📈 Peak Amplitudes]
+            `;
+
+            if (!collapsedSections.amplitude) {
+                diagramCode += `
+                I --> I1(analyze_amplitude_shift)
+                I1 --> I2[Amplitude Plots<br/>📊 Figure L-M]
+                I --> I3(analyze_amplitude_redistribution)
+                I3 --> I4[Redistribution Plots<br/>📊 Supplemental 1]
+                I1 --> K
+                I3 --> K
+                `;
+            } else {
+                diagramCode += `
+                I --> K
+                `;
+            }
+
+            // Information Analysis - exact structure from flowchart.mmd
+            diagramCode += `
+                G1 --> J[Information Analysis<br/>🔄 Conditional Entropy]
+            `;
+
+            if (!collapsedSections.information) {
+                diagramCode += `
+                J --> J1(analyze_directional_cH)
+                J1 --> J2[Information Flow Plots<br/>📊 Figure Q-R]
+                J --> J3(analyze_directional_info_flow)
+                J3 --> J4[Info Flow Plots<br/>📊 Supplemental 2]
+                J1 --> K
+                J3 --> K
+                `;
+            } else {
+                diagramCode += `
+                J --> K
+                `;
+            }
+
+            // Population Data Preparation
+            diagramCode += `
+                K[Individual Results<br/>📋 Per Animal]
+                K --> L(combine_animal_results<br/>🔗 Merge All Animals)
+                L --> M[Population Datasets<br/>💾 population_data.rda]
+
+                %% Population Analysis
+                M --> N[Population Analysis<br/>👥 Multi-Animal]
+            `;
+
+            // Population Analysis - exact structure from flowchart.mmd
+            if (!collapsedSections.population) {
+                diagramCode += `
+                %% Population Analysis Branches
+                N --> O[Temporal Dynamics<br/>⏱️ Population Level]
+                O --> O1(analyze_td_metrics<br/>📊 LMM Analysis)
+                O1 --> O2(plot_td_panel<br/>📊 Figure D-G)
+                O --> O3(analyze_within_window_trends)
+                O3 --> O4(plot_paired_metric_panel<br/>📊 Figure H-K)
+
+                N --> P[Amplitude Dynamics<br/>📈 Population Level]
+                P --> P1(analyze_amplitude_metrics<br/>📊 LMM Analysis)
+                P1 --> P2(plot_amplitude_panel<br/>📊 Figure N-P)
+                P --> P3(analyze_within_window_trends2)
+                P3 --> P4(plot_paired_metric_panel2<br/>📊 Supplemental 1)
+
+                N --> Q[Information Dynamics<br/>🔄 Population Level]
+                Q --> Q1(analyze_cH_metrics<br/>📊 LMM Analysis)
+                Q1 --> Q2(plot_cH_panel<br/>📊 Figure S-U)
+                Q --> Q3(analyze_within_window_info_flow)
+                Q3 --> Q4(plot_paired_metric_panel2<br/>📊 Supplemental 2)
+
+                %% Final Results
+                O1 --> R[Statistical Results<br/>💾 results.rda]
+                P1 --> R
+                Q1 --> R
+                O3 --> R
+                P3 --> R
+                Q3 --> R
+                `;
+            } else {
+                diagramCode += `
+                N --> R[Statistical Results<br/>💾 results.rda]
+                `;
+            }
+
+            // Styling - exact from flowchart.mmd
+            diagramCode += `
+                %% Styling
+                classDef dataSource fill:#e1f5fe,stroke:#01579b,stroke-width:2px
+                classDef asapFunc fill:#f3e5f5,stroke:#4a148c,stroke-width:2px
+                classDef vnsFunc fill:#e8f5e8,stroke:#1b5e20,stroke-width:2px
+                classDef analysis fill:#fff3e0,stroke:#e65100,stroke-width:2px
+                classDef visualization fill:#fce4ec,stroke:#880e4f,stroke-width:2px
+                classDef results fill:#f1f8e9,stroke:#33691e,stroke-width:2px
+
+                class A,F,M,R dataSource
+                class B,C,D1,D2,D3,D4,D5,D6,D7 asapFunc
+                class E1,E2,E3,E4,E5,E6,E7,E8,G1,H1,I1,I3,J1,J3,L,O1,O3,P1,P3,Q1,Q3 vnsFunc
+                class G,H,I,J,N,O,P,Q analysis
+                class H2,H3,I2,I4,J2,J4,O2,O4,P2,P4,Q2,Q4 visualization
+                class K,R results
+
+                %% Link styling for rounded edges
+                linkStyle default stroke:#333,stroke-width:2px,fill:none
+            `;
+
+            // Clear and render
+            document.getElementById('diagram').innerHTML = '<pre class="mermaid">' + diagramCode + '</pre>';
+            
+            // Re-render mermaid
+            await mermaid.run();
+        }
+
+        // Make functions globally accessible
+        window.toggleSection = toggleSection;
+        window.toggleAll = toggleAll;
+
+        // Initial render when page loads
+        window.addEventListener('load', async () => {
+            updateButtonStates();
+            await renderDiagram();
+        });
+    </script>
+</body>
+</html>
