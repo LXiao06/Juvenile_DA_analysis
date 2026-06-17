@@ -47,8 +47,9 @@ Tutorials
 - [Data Processing](data_processing.html)
 - [Individual Analysis](individual_analysis.html)
 - [Population Analysis](population_analysis.html)
-    - [Weighted LMMs](weighted LMMs.html)
-    - [Balanced Resampling](balanced Resampling.html)
+    - [Weighted LMMs](weighted_LMMs.html)
+    - [Balanced Resampling](balanced_resampling.html)
+- [Photometry Modeling](photometry_modeling.html)
 \
 \
 

@@ -29,6 +29,8 @@ For details, see the [ASAP GitHub repository](https://github.com/LXiao06/ASAP) a
   <br />
 - [Population Analysis](https://lxiao06.github.io/Juvenile_DA_analysis/population_analysis.html)
   <br />
+- [Photometry Modeling (Time Warping)](https://lxiao06.github.io/Juvenile_DA_analysis/photometry_modeling.html)
+  <br />
 
 ### Architecture Overview
 ------
